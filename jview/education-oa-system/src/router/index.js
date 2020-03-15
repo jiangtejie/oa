@@ -36,7 +36,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'index' }
     }]
   },
 
@@ -45,18 +45,18 @@ export const constantRoutes = [
     path: '/lessonDegree',
     component: Layout,
     redirect: '/lessonDegree/index',
-    meta: { title: '课表安排', icon: 'dashboard' },
+    meta: { title: '课表安排', icon: 'class' },
     children: [{
       path: 'index',
       name: 'lessonDegree',
       component: () => import('@/views/lessonDegree/index'),
-      meta: { title: '我的课表', icon: 'dashboard' }
+      meta: { title: '我的课表', icon: 'mine' }
     },
     {
       path: 'index2',
       name: 'lessonDegree2',
       component: () => import('@/views/lessonDegree/index'),
-      meta: { title: '课表调休', icon: 'dashboard' }
+      meta: { title: '课表调休', icon: 'time' }
     }
     ]
   },
@@ -68,38 +68,38 @@ export const constantRoutes = [
     redirect: '/offWork/index',
     meta: {
       title: '流程管理',
-      icon: 'dashboard',
+      icon: 'process',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [{
       path: 'index',
       name: 'offWork',
       component: () => import('@/views/offWork/index'),
-      meta: { title: '申请请假', icon: 'dashboard' }
+      meta: { title: '申请请假', icon: 'holidays' }
     },
     {
       path: 'index2',
       name: 'todo',
       component: () => import('@/views/offWork/index'),
-      meta: { title: '待办流程', icon: 'dashboard' }
+      meta: { title: '待办流程', icon: 'todo' }
     },
     {
       path: 'index3',
       name: 'doing',
       component: () => import('@/views/offWork/index'),
-      meta: { title: '在办流程', icon: 'dashboard' }
+      meta: { title: '在办流程', icon: 'doing' }
     },
     {
       path: 'index4',
       name: 'done',
       component: () => import('@/views/offWork/index'),
-      meta: { title: '已办流程', icon: 'dashboard' }
+      meta: { title: '已办流程', icon: 'done' }
     },
     {
       path: 'index5',
       name: 'bussiness',
       component: () => import('@/views/offWork/index'),
-      meta: { title: '出差委托', icon: 'dashboard' }
+      meta: { title: '出差委托', icon: 'business' }
     }
     ]
   },
@@ -111,20 +111,20 @@ export const constantRoutes = [
     redirect: '/knowledge/index',
     meta: {
       title: '知识管理',
-      icon: 'dashboard',
+      icon: 'manage',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [{
       path: 'index',
       name: 'knowledge',
       component: () => import('@/views/lessonDegree/index'),
-      meta: { title: '课程资料', icon: 'dashboard' }
+      meta: { title: '课程资料', icon: 'data' }
     },
     {
       path: 'index2',
       name: 'knowledge2',
       component: () => import('@/views/lessonDegree/index'),
-      meta: { title: '资料分类', icon: 'dashboard' }
+      meta: { title: '资料分类', icon: 'type' }
     }]
   },
 
@@ -135,20 +135,20 @@ export const constantRoutes = [
     redirect: '/im/index',
     meta: {
       title: '协作管理',
-      icon: 'dashboard',
+      icon: 'group',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [{
       path: 'index',
       name: 'im',
       component: () => import('@/views/lessonDegree/index'),
-      meta: { title: '同事圈', icon: 'dashboard' }
+      meta: { title: '同事圈', icon: 'workmate' }
     },
     {
       path: 'index2',
       name: 'im2',
       component: () => import('@/views/lessonDegree/index'),
-      meta: { title: '工作群', icon: 'dashboard' }
+      meta: { title: '工作群', icon: 'workgroup' }
     }]
   },
 
@@ -158,21 +158,21 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/system/index',
     meta: {
-      title: '机构分析',
-      icon: 'dashboard',
+      title: '机构信息',
+      icon: 'organization',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [{
       path: 'index',
       name: 'system',
       component: () => import('@/views/lessonDegree/index'),
-      meta: { title: '业务分析', icon: 'dashboard' }
+      meta: { title: '业务分析', icon: 'check' }
     },
     {
       path: 'index2',
       name: 'system2',
       component: () => import('@/views/lessonDegree/index'),
-      meta: { title: '业绩分析', icon: 'dashboard' }
+      meta: { title: '业绩分析', icon: 'check-2' }
     }]
   },
 
@@ -185,7 +185,7 @@ export const constantRoutes = [
       path: 'index',
       name: 'notice',
       component: () => import('@/views/lessonDegree/index'),
-      meta: { title: '通知公告', icon: 'dashboard' }
+      meta: { title: '通知公告', icon: 'notice' }
     }]
   },
 

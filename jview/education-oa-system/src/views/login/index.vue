@@ -45,7 +45,7 @@
 
       <div class="tips">
         <span style="margin-right:20px;">账号: admin</span>
-        <span> 密码: any</span>
+        <span> 密码: 123456</span>
       </div>
 
     </el-form>
@@ -61,7 +61,7 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('请输入正确的用户名！'))
+        callback(new Error('用户名格式不正确'))
       } else {
         callback()
       }
