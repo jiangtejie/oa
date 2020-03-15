@@ -13,7 +13,7 @@ public enum CustomErrorCode {
 
     LOGIN_FIRST(HttpServletResponse.SC_UNAUTHORIZED,"请先登录!"),
     ACCESS_DENIED(HttpServletResponse.SC_FORBIDDEN,"权限不足!"),
-    INVALID_TOKEN(HttpServletResponse.SC_UNAUTHORIZED,"登录失效!");
+    INVALID_TOKEN(HttpServletResponse.SC_UNAUTHORIZED,"失效token!");
 
     private int code;
 

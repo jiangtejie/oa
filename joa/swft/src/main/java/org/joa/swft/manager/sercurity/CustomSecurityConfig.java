@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.joa.swft.exception.CustomErrorCode;
 import org.joa.swft.manager.filter.JwtAuthFilter;
-import org.joa.swft.pojo.vo.ResultVo;
+import org.joa.swft.pojo.vo.ResultVO;
 import org.joa.swft.service.CustomUserDetailService;
 import org.joa.swft.util.JwtUtil;
 import org.joa.swft.util.UserUtil;
@@ -71,12 +71,12 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user/login", "/logout", "/toLogin").permitAll()
+                .antMatchers("/user/login", "/user/logout", "/re-login").permitAll()
                 .anyRequest()
                 .fullyAuthenticated()
                 .and()
                 .formLogin()
-                .loginPage("/toLogin")
+                .loginPage("/re-login")
                 .loginProcessingUrl("/user/login")
                 .successHandler((request, response, authentication) -> {
                     if (log.isDebugEnabled()) {
@@ -88,32 +88,32 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    response.getWriter().write(objectMapper.writeValueAsString(ResultVo.success(tokenData)));
+                    response.getWriter().write(objectMapper.writeValueAsString(ResultVO.success(tokenData)));
                 })
                 .failureHandler((request, response, ex) -> {
                     if (log.isDebugEnabled()) {
                         log.debug("登录失败({})", ex.getMessage());
                     }
-                    response.getWriter().write(objectMapper.writeValueAsString(ResultVo.error(ex.getMessage())));
+                    response.getWriter().write(objectMapper.writeValueAsString(ResultVO.error(ex.getMessage())));
                 })
                 .and()
                 .exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
                 if (log.isDebugEnabled()) {
                     log.debug("token无效({})", ex.getMessage());
                 }
-            response.getWriter().write(objectMapper.writeValueAsString(ResultVo.error(CustomErrorCode.INVALID_TOKEN)));
+            response.getWriter().write(objectMapper.writeValueAsString(ResultVO.error(CustomErrorCode.INVALID_TOKEN)));
         })
                 .accessDeniedHandler((request, response, ex) -> {
-                    response.getWriter().write(objectMapper.writeValueAsString(ResultVo.error(CustomErrorCode.ACCESS_DENIED)));
+                    response.getWriter().write(objectMapper.writeValueAsString(ResultVO.error(CustomErrorCode.ACCESS_DENIED)));
                 })
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
-                .logoutUrl("/logout").logoutSuccessHandler((request, response, authentication) -> {
+                .logoutUrl("/user/logout").logoutSuccessHandler((request, response, authentication) -> {
                 if (log.isDebugEnabled()) {
                     log.debug("退出成功");
                 }
-                response.getWriter().write(objectMapper.writeValueAsString(ResultVo.success("退出成功!")));
+                response.getWriter().write(objectMapper.writeValueAsString(ResultVO.success("退出成功!")));
         });
     }
 

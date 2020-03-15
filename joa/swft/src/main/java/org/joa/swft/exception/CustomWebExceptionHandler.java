@@ -1,6 +1,6 @@
 package org.joa.swft.exception;
 
-import org.joa.swft.pojo.vo.ResultVo;
+import org.joa.swft.pojo.vo.ResultVO;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +17,7 @@ public class CustomWebExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler({CustomWebException.class})
-    public ResultVo defaultError(CustomWebException e){
-        return ResultVo.error(e.getCode(),e.getMessage());
+    public ResultVO defaultError(CustomWebException e){
+        return ResultVO.error(e.getCode(),e.getMessage());
     }
 }

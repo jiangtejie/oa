@@ -15,6 +15,9 @@ spring:
       # 配置获取连接等待超时的时间
       maxWait: 60000
       async-close-connection-enable: true
+  aop:
+    #使用cglib进行代理
+    proxy-target-class: true
 
 #mybatis配置
 mybatis-plus:

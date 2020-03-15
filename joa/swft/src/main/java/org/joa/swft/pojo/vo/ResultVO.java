@@ -11,17 +11,17 @@ import java.util.HashMap;
  * @date 2019/12/2916:20
  */
 
-public class ResultVo <T> extends HashMap implements Serializable {
+public class ResultVO<T> extends HashMap implements Serializable {
 
     private static final long serialVersionUID = -1802122468331526708L;
 
-    private ResultVo(int code, String msg, T data){
+    private ResultVO(int code, String msg, T data){
         this.put(ResultConstant.RESULT_CODE,code);
         this.put(ResultConstant.RESULT_MSG,msg);
         this.put(ResultConstant.RESULT_DATA,data);
     }
 
-    private ResultVo(int code, String msg){
+    private ResultVO(int code, String msg){
         this.put(ResultConstant.RESULT_CODE,code);
         this.put(ResultConstant.RESULT_MSG,msg);
     }
@@ -31,8 +31,8 @@ public class ResultVo <T> extends HashMap implements Serializable {
      * @param data
      * @return
      */
-    public static <T> ResultVo success(T data){
-        return new ResultVo(HttpServletResponse.SC_OK,ResultConstant.RESULT_OPTION_SUCCESS_DESC,data);
+    public static <T> ResultVO success(T data){
+        return new ResultVO(ResultConstant.RESULT_SUCCESS_CODE,ResultConstant.RESULT_OPTION_SUCCESS_DESC,data);
     }
 
     /**
@@ -40,31 +40,31 @@ public class ResultVo <T> extends HashMap implements Serializable {
      * @param msg
      * @return
      */
-    public static <T> ResultVo successWithNonData(String msg){
-        return new ResultVo(HttpServletResponse.SC_OK,msg);
+    public static <T> ResultVO successWithNonData(String msg){
+        return new ResultVO(HttpServletResponse.SC_OK,msg);
     }
 
     /**
      * 返回失败信息
      * @return
      */
-    public static <T> ResultVo error(CustomErrorCode errorCode){
-        return new ResultVo(errorCode.getCode(),errorCode.getMsg());
+    public static <T> ResultVO error(CustomErrorCode errorCode){
+        return new ResultVO(errorCode.getCode(),errorCode.getMsg());
     }
 
     /**
      * 返回失败信息
      * @return
      */
-    public static <T> ResultVo error(Integer code, String message) {
-        return new ResultVo(code,message);
+    public static <T> ResultVO error(Integer code, String message) {
+        return new ResultVO(code,message);
     }
 
     /**
      * 返回失败信息
      * @return
      */
-    public static <T> ResultVo error(String message) {
-        return new ResultVo(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,message);
+    public static <T> ResultVO error(String message) {
+        return new ResultVO(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,message);
     }
 }
