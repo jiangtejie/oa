@@ -30,7 +30,6 @@ mybatis-plus:
     lazy-loading-enabled: true
     aggressive-lazy-loading: false
     cache-enabled: true
-
 #jwt
 jwt:
   secret: jiangtejie

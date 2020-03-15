@@ -19,26 +19,6 @@ import java.util.Collection;
 public class AuthUser implements UserDetails {
 
     /**
-     * 账户是否可用
-     */
-    private Boolean isEnabled = true;
-
-    /**
-     * 账户是否锁定
-     */
-    private Boolean isAccountNonLocked = true;
-
-    /**
-     * 账户是否未过期
-     */
-    private Boolean isAccountNonExpired = true;
-
-    /**
-     * 密码是否未过期 提醒用户修改密码
-     */
-    private Boolean isCredentialsNonExpired = true;
-
-    /**
      * 权限角色集合
      */
     private Collection<? extends GrantedAuthority> authority;
@@ -66,21 +46,21 @@ public class AuthUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return isAccountNonExpired;
+        return user.getAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return isAccountNonLocked;
+        return user.getAccountNonLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return isCredentialsNonExpired;
+        return user.getCredentialsNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return isEnabled;
+        return user.getEnabled();
     }
 }

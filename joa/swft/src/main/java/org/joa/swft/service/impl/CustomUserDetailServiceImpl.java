@@ -40,27 +40,29 @@ public class CustomUserDetailServiceImpl extends ServiceImpl<UserMapper, User> i
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>(new User(s));
+
         if(log.isDebugEnabled()){
             log.debug("查询用户({})",s);
         }
+
         User user = usersMapper.selectOne(userQueryWrapper);
         if(ObjectUtils.isEmpty(user)){
             throw new UsernameNotFoundException("用户不存在");
         }
         AuthUser authUser = new AuthUser(user);
-        //暂时写死
-        authUser.setIsAccountNonExpired(true);
-        authUser.setIsCredentialsNonExpired(true);
-        authUser.setIsAccountNonLocked(true);
-        authUser.setIsEnabled(true);
+
+        //查询用户角色
+
+        //查询用户权限
 
         //设置权限 角色
         String authoritiesStr = "ROLE_ADMIN";
+
         List<GrantedAuthority> authorities = new ArrayList<>(8);
         authorities.addAll(AuthorityUtils.commaSeparatedStringToAuthorityList(authoritiesStr));
         authUser.setAuthority(authorities);
-        //缓存用户信息
         userInfoCache.put(GuavaCacheConfig.USER_INFO_CACHE,authUser);
         return authUser;
     }

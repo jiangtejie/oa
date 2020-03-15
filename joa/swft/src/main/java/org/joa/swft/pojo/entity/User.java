@@ -70,6 +70,22 @@ public class User implements Serializable {
     @TableField(value = "update_time")
     private Date updateTime;
 
+    /**账号是否过期*/
+    @TableField(value = "is_account_non_expired")
+    private Boolean accountNonExpired;
+
+    /**账号是否锁定*/
+    @TableField(value = "is_account_non_locked")
+    private Boolean accountNonLocked;
+
+    /**账户是否可用*/
+    @TableField(value = "is_enabled")
+    private Boolean enabled;
+
+    /**凭证是否过期（提醒用户修改密码）*/
+    @TableField(value = "is_credentials_non_expired")
+    private Boolean credentialsNonExpired;
+
     public User(String username) {
         this.username = username;
     }
