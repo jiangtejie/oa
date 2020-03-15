@@ -35,6 +35,13 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo')
+          /**
+           *  const { roles,routelist } = await store.dispatch('user/getInfo')
+            //routelist 是后端返回的上面的数据
+            // generate accessible routes map based on roles
+            const accessRoutes = await store.dispatch('permission/generateRoutes1', routelist)
+            router.addRoutes(accessRoutes)
+           */
           // 放行
           next()
         } catch (error) {

@@ -28,9 +28,8 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      login(userInfo).then(response => {
         const { data } = response
         // 提交mutation的方式改变state里面的数据
         commit('SET_TOKEN', data.token)

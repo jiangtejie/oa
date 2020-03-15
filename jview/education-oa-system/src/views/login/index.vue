@@ -54,6 +54,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import Qs from 'qs'
 
 export default {
   name: 'Login',
@@ -75,7 +76,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '123456'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -110,7 +111,7 @@ export default {
         if (valid) {
           this.loading = true
           // 分发action, action名称位login ， user是store子模块
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/login', Qs.stringify(this.loginForm)).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
