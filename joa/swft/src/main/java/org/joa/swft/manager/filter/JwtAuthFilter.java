@@ -68,13 +68,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
             // 如果jwt正确解出账号信息，说明是合法用户，设置认证信息，认证通过
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                //获取前端输入的用户信息
-                ObjectMapper objectMapper = new ObjectMapper();
-                String loginUserInfo = IOUtils.toString(request.getInputStream(),"UTF-8");
-
-                if(log.isDebugEnabled()){
-                    log.debug("接受到的用户信息({})",loginUserInfo);
-                }
                 UserDetails userDetails = userInfoCache.getIfPresent(GuavaCacheConfig.USER_INFO_CACHE);
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
@@ -84,7 +77,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 if(log.isDebugEnabled()){
                     log.debug("设置用户认证信息({})",auth);
                 }
-                // 设置用户登录状态的信息
+                // 全局设置用户登录状态的信息，方便以后全局取出
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }

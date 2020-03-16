@@ -82,6 +82,10 @@ public class User implements Serializable {
     @TableField(value = "is_enabled")
     private Boolean enabled;
 
+    /**登录次数*/
+    @TableField(value = "login_count")
+    private Integer loginCount;
+
     /**凭证是否过期（提醒用户修改密码）*/
     @TableField(value = "is_credentials_non_expired")
     private Boolean credentialsNonExpired;
