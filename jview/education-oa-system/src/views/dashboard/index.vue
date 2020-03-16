@@ -1,10 +1,13 @@
 <template>
   <div class="dashboard-container">
-    1
+    <div class="chart-container">
+      <chart height="100%" width="100%" />
+    </div>
   </div>
 </template>
 
 <script>
+import Chart from '@/components/Charts/LineMarker'
 import { mapGetters } from 'vuex'
 // 引导步骤插件
 import Driver from 'driver.js'
@@ -13,6 +16,7 @@ import steps from './steps' // 用来存放引导的步骤
 
 export default {
   name: 'Dashboard',
+  components: { Chart },
   data() {
     return {
 
@@ -60,4 +64,9 @@ export default {
   }
 }
 
+.chart-container{
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 84px);
+}
 </style>

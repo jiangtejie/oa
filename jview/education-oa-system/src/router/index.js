@@ -176,6 +176,50 @@ export const constantRoutes = [
     }]
   },
 
+  // 系统管理
+  {
+    path: '/manage',
+    component: Layout,
+    redirect: '/manage/user',
+    meta: {
+      title: '系统管理',
+      icon: 'manage2',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'user',
+      name: 'user',
+      component: () => import('@/views/manage/user/index'),
+      meta: { title: '用户管理', icon: 'manage3' }
+    },
+    {
+      path: 'role',
+      name: 'role',
+      component: () => import('@/views/manage/role/index'),
+      meta: { title: '角色管理', icon: 'role' }
+    },
+    {
+      path: 'perm',
+      name: 'perm',
+      component: () => import('@/views/manage/perm/index'),
+      meta: { title: '权限管理', icon: 'perm' }
+    }
+    ]
+  },
+
+  // 日志管理
+  {
+    path: '/log',
+    component: Layout,
+    redirect: '/log/index',
+    children: [{
+      path: 'index',
+      name: 'log',
+      component: () => import('@/views/lessonDegree/index'),
+      meta: { title: '日志管理', icon: 'log' }
+    }]
+  },
+
   // 通知公告
   {
     path: '/notice',

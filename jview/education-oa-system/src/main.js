@@ -17,7 +17,10 @@ import '@/permission' // permission control
 
 // 趋势图
 import Trend from 'vuetrend'
+// 图表
+import echarts from 'echarts'
 
+Vue.use(echarts)
 Vue.use(Trend)
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })

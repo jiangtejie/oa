@@ -39,7 +39,7 @@
             <el-button type="text" style="color:black" @click="dialogTableVisible = true">我的同事<el-badge class="mark" :value="12" /></el-button>
           </el-dropdown-item>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">个人中心</span>
+            <span style="display:block;">个人中心</span>
           </el-dropdown-item>
           <el-dropdown-item class="clearfix">
             <router-link to="/">系统消息<el-badge class="mark" :value="12" /></router-link>
