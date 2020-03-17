@@ -6,7 +6,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.joa.swft.dao.LogMapper;
 import org.joa.swft.pojo.dto.LogDto;
 import org.joa.swft.pojo.entity.Log;
 import org.joa.swft.service.LogService;
@@ -20,7 +19,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -67,7 +66,7 @@ public class LogServiceAspect {
         log.setOptionTarget(logDto.getOptionModule());
         log.setOptionType(logDto.getOptionType());
         log.setRemark(logDto.getOptionDesc());
-        log.setCreateTime(new Date());
+        log.setCreateTime(LocalDateTime.now());
         if(!params.isEmpty()){
             log.setOptionParams(JSONObject.toJSONString(params));
         }

@@ -24,18 +24,13 @@ import javax.servlet.http.HttpServletRequest;
 @Api(value = "登录相关请求处理")
 public class LoginController extends BaseController{
 
-    /**
-     * 获取用户信息
-     * @return 头像 姓名
-     */
+
+    @ApiOperation(value="获取用户的信息", notes="角色集合、权限集合")
     @GetMapping("user/info")
     @OptionLog(optionModule = "用户模块",optionType = BusinessType.SELECT, optionDesc = "获取用户信息")
-    @ApiOperation(value="获取用户的信息", notes="角色集合、权限集合")
-    public ResultVO<UserInfoVO> getUserInfo(HttpServletRequest httpServletRequest){
+    public ResultVO<UserInfoVO> getUserInfo(){
         User user = UserUtil.getCurrentUser().getUser();
         UserInfoVO userInfoVO = new UserInfoVO(user.getRealName(),"https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        //登录日志
-
         return ResultVO.success(userInfoVO);
     }
 }

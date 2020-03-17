@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author JiangTeJie
@@ -52,5 +52,5 @@ public class Log extends Model<Log> implements Serializable {
 
     /**创建时间*/
     @TableField(value = "create_time")
-    private Date createTime;
+    private LocalDateTime createTime;
 }

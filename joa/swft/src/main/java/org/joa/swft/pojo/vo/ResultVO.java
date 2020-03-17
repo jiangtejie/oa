@@ -37,11 +37,10 @@ public class ResultVO<T> extends HashMap implements Serializable {
 
     /**
      * 返回成功信息
-     * @param msg
      * @return
      */
-    public static <T> ResultVO successWithNonData(String msg){
-        return new ResultVO(HttpServletResponse.SC_OK,msg);
+    public static <T> ResultVO success(){
+        return new ResultVO(HttpServletResponse.SC_OK,ResultConstant.RESULT_OPTION_SUCCESS_DESC);
     }
 
     /**
@@ -66,5 +65,13 @@ public class ResultVO<T> extends HashMap implements Serializable {
      */
     public static <T> ResultVO error(String message) {
         return new ResultVO(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,message);
+    }
+
+    /**
+     * 返回失败信息
+     * @return
+     */
+    public static <T> ResultVO error() {
+        return new ResultVO(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,ResultConstant.RESULT_OPTION_FAIL_DESC);
     }
 }
