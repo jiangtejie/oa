@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Chart from '@/components/Charts/LineMarker'
+import Chart from '@/components/Charts/MixChart'
 import { mapGetters } from 'vuex'
 // 引导步骤插件
 import Driver from 'driver.js'

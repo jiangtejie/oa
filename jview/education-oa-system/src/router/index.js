@@ -203,8 +203,13 @@ export const constantRoutes = [
       name: 'perm',
       component: () => import('@/views/manage/perm/index'),
       meta: { title: '权限管理', icon: 'perm' }
-    }
-    ]
+    },
+    {
+      path: 'check',
+      name: 'check',
+      component: () => import('@/views/manage/check/index'),
+      meta: { title: '系统分析', icon: 'check' }
+    }]
   },
 
   // 日志管理

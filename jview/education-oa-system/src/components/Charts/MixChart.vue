@@ -54,7 +54,7 @@ export default {
       this.chart.setOption({
         backgroundColor: '#344b58',
         title: {
-          text: 'statistics',
+          text: '用户注册分布图',
           x: '20',
           top: '20',
           textStyle: {
@@ -183,7 +183,7 @@ export default {
             }
           },
           data: [
-            709,
+            1709,
             1917,
             2455,
             2610,
