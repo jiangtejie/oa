@@ -3,8 +3,10 @@ package org.joa.swft.pojo.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @TableName(value = "permission")
-public class Permission {
+public class Permission extends Model<Permission> implements Serializable {
 
     @TableId(value = "id")
     private Integer id;

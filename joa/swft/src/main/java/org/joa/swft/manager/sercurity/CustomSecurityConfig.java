@@ -4,8 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.joa.swft.exception.CustomErrorCode;
 import org.joa.swft.manager.filter.JwtAuthFilter;
+import org.joa.swft.pojo.dto.BusinessType;
+import org.joa.swft.pojo.entity.Log;
 import org.joa.swft.pojo.vo.ResultVO;
 import org.joa.swft.service.CustomUserDetailService;
+import org.joa.swft.service.LogService;
+import org.joa.swft.util.HttpUtil;
 import org.joa.swft.util.JwtUtil;
 import org.joa.swft.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -38,6 +43,9 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private LogService logService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -71,7 +79,13 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user/login", "/user/logout", "/re-login").permitAll()
+                .antMatchers("/v2/api-docs",
+                                        "/swagger-resources/configuration/ui",
+                                        "/swagger-resources",
+                                        "/swagger-resources/configuration/security",
+                                        "/swagger-ui.html",
+                                        "/webjars/**",
+                                        "/user/login", "/user/logout", "/re-login").permitAll()
                 .anyRequest()
                 .fullyAuthenticated()
                 .and()
@@ -82,6 +96,16 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                     if (log.isDebugEnabled()) {
                         log.debug("登陆成功({})", authentication.getPrincipal());
                     }
+                    //记录登录日志
+                    Log log = new Log();
+                    log.setOptionUser(UserUtil.getCurrentUser().getUser().getId());
+                    log.setOptionUsername(UserUtil.getCurrentUser().getUser().getRealName());
+                    log.setOptionTarget("用户登录");
+                    log.setOptionType(BusinessType.LOGIN.getType());
+                    log.setCreateTime(new Date());
+                    log.setIp(HttpUtil.getIp(request));
+                    log.setRemark("第"+UserUtil.getCurrentUser().getUser().getLoginCount()+"次登录");
+                    logService.save(log);
                     Map tokenData = new HashMap(8);
                     try {
                         tokenData.put("token", jwtUtil.createJWT(UUID.randomUUID().toString(), UserUtil.getCurrentUser()));
