@@ -15,16 +15,19 @@
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "dependencies": {
+    "@handsontable/vue": "^4.1.1",
     "axios": "0.18.1",
     "driver.js": "^0.9.8",
     "echarts": "^4.6.0",
     "element-ui": "2.7.2",
+    "handsontable": "^7.4.2",
     "js-cookie": "2.2.0",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
     "qs": "^6.9.1",
     "vue": "2.6.10",
+    "vue-amap": "^0.5.10",
     "vue-router": "3.0.6",
     "vuetrend": "^0.3.4",
     "vuex": "3.1.0"

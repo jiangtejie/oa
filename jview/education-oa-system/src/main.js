@@ -19,7 +19,10 @@ import '@/permission' // permission control
 import Trend from 'vuetrend'
 // 图表
 import echarts from 'echarts'
+// 地图
+import VueAMap from 'vue-amap'
 
+Vue.use(VueAMap)
 Vue.use(echarts)
 Vue.use(Trend)
 // set ElementUI lang to EN
@@ -28,6 +31,23 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+
+VueAMap.initAMapApiLoader({
+  key: '06ced02bbb7ee175eb39a47fed5158fe',
+  plugin: [
+    'AMap.Autocomplete',
+    'AMap.PlaceSearch',
+    'AMap.Scale',
+    'AMap.OverView',
+    'AMap.ToolBar',
+    'AMap.MapType',
+    'AMap.PolyEditor',
+    'AMap.CircleEditor',
+    'AMap.Geolocation'
+  ],
+  // 默认高德 sdk 版本为 1.4.4
+  v: '1.4.4'
+})
 
 new Vue({
   el: '#app',

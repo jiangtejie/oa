@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '心田花开教育OA系统',
+  title: '远程办公系统',
 
   /**
    * @type {boolean} true | false

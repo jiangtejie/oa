@@ -7,7 +7,7 @@ function resolve(dir) {
 }
 
 // 设置页面的 title 属性
-const name = defaultSettings.title || '心田花开教育OA系统' // 页面标题
+const name = defaultSettings.title || '远程办公系统' // 页面标题
 
 // 设置项目端口号
 const port = process.env.port || process.env.npm_config_port || 9528 // dev port
