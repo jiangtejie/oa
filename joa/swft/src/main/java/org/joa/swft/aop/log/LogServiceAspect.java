@@ -19,7 +19,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -66,7 +66,7 @@ public class LogServiceAspect {
         log.setOptionTarget(logDto.getOptionModule());
         log.setOptionType(logDto.getOptionType());
         log.setRemark(logDto.getOptionDesc());
-        log.setCreateTime(LocalDateTime.now());
+        log.setCreateTime(new Date());
         if(!params.isEmpty()){
             log.setOptionParams(JSONObject.toJSONString(params));
         }

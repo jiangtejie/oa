@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author JiangTeJie
@@ -30,8 +30,8 @@ public class Permission extends Model<Permission> implements Serializable {
     private String permDesc;
 
     @TableField(value = "create_time")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @TableField(value = "update_time")
-    private LocalDateTime updateTime;
+    private Date updateTime;
 }

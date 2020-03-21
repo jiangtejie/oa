@@ -1,9 +1,7 @@
 package org.joa.swft.manager.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.cache.Cache;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joa.swft.config.GuavaCacheConfig;
 import org.joa.swft.manager.sercurity.AuthUser;

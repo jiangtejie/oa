@@ -25,7 +25,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -103,7 +102,7 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                     log.setOptionUsername(UserUtil.getCurrentUser().getUser().getRealName());
                     log.setOptionTarget("用户登录");
                     log.setOptionType(BusinessType.LOGIN.getType());
-                    log.setCreateTime(LocalDateTime.now());
+                    log.setCreateTime(new Date());
                     log.setIp(HttpUtil.getIp(request));
                     log.setRemark("第"+UserUtil.getCurrentUser().getUser().getLoginCount()+"次登录");
                     logService.save(log);

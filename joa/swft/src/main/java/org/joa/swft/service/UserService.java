@@ -1,6 +1,7 @@
 package org.joa.swft.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.joa.swft.dao.UserMapper;
 import org.joa.swft.pojo.entity.User;
 
 /**

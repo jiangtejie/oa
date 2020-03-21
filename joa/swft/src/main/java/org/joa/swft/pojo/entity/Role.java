@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author JiangTeJie
@@ -39,11 +39,11 @@ public class Role extends Model<Role> implements Serializable {
 
     /**创建时间*/
     @TableField(value = "create_time")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**最近更新时间*/
     @TableField(value = "update_time")
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     /**角色描述*/
     @TableField(value = "role_desc")
