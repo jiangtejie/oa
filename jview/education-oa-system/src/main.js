@@ -22,16 +22,6 @@ import echarts from 'echarts'
 // 地图
 import VueAMap from 'vue-amap'
 
-Vue.use(VueAMap)
-Vue.use(echarts)
-Vue.use(Trend)
-// set ElementUI lang to EN
-Vue.use(ElementUI, { locale })
-// 如果想要中文版 element-ui，按如下方式声明
-// Vue.use(ElementUI)
-
-Vue.config.productionTip = false
-
 VueAMap.initAMapApiLoader({
   key: '06ced02bbb7ee175eb39a47fed5158fe',
   plugin: [
@@ -48,6 +38,16 @@ VueAMap.initAMapApiLoader({
   // 默认高德 sdk 版本为 1.4.4
   v: '1.4.4'
 })
+
+Vue.use(VueAMap)
+Vue.use(echarts)
+Vue.use(Trend)
+// set ElementUI lang to EN
+Vue.use(ElementUI, { locale })
+// 如果想要中文版 element-ui，按如下方式声明
+// Vue.use(ElementUI)
+
+Vue.config.productionTip = false
 
 new Vue({
   el: '#app',
