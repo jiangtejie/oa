@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 import org.joa.swft.pojo.entity.validate.Add;
 import org.joa.swft.pojo.entity.validate.Delete;
 import org.joa.swft.pojo.entity.validate.Update;
@@ -17,7 +17,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author JiangTeJie
@@ -27,7 +26,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "user")
-public class User extends Model<User> implements Serializable {
+public class User extends BaseEntity<User> implements Serializable {
 
     /**id*/
     /**主键*/
@@ -58,14 +57,13 @@ public class User extends Model<User> implements Serializable {
 
     /**性别*/
     @TableField(value = "gender")
-    @NotNull(message = "性别不能为空",groups = {Add.class})
-    private String gender;
+    @Range(min = 0,max = 1,message = "请正确填写性别",groups = {Add.class})
+    private int gender;
 
     /**年龄*/
     @TableField(value = "age")
-    @Min(value = 0,message = "年龄不能为负数",groups = {Add.class})
-    @Max(value = 100,message = "你这么大岁数，还玩电脑，我不信O(∩_∩)O",groups = {Add.class})
-    private String age;
+    @Range(min = 1,max = 100,message = "请正确填写年龄",groups = {Add.class})
+    private int age;
 
     /**地址*/
     @TableField(value = "address")
@@ -75,14 +73,6 @@ public class User extends Model<User> implements Serializable {
     /**登录ip*/
     @TableField(value = "login_ip")
     private String loginIp;
-
-    /**创建时间*/
-    @TableField(value = "create_time")
-    private Date createTime;
-
-    /**更新时间*/
-    @TableField(value = "update_time")
-    private Date updateTime;
 
     /**账号是否过期*/
     @TableField(value = "is_account_non_expired")
@@ -103,6 +93,10 @@ public class User extends Model<User> implements Serializable {
     /**凭证是否过期（提醒用户修改密码）*/
     @TableField(value = "is_credentials_non_expired")
     private Boolean credentialsNonExpired;
+
+    public User(int id){
+        this.id = id;
+    }
 
     public User(String username) {
         this.username = username;

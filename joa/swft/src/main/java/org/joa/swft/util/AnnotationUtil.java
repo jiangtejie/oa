@@ -36,7 +36,7 @@ public class AnnotationUtil {
                 if (tmpCs.length == arguments.length) {
                     OptionLog methodCache = m.getAnnotation(OptionLog.class);
                     if (methodCache != null) {
-                        logDto = new LogDto(methodCache.optionModule(),methodCache.optionType().getType(),methodCache.optionDesc());
+                        logDto = new LogDto(methodCache.optionModule(),methodCache.optionType().getType(),methodCache.optionDesc(),methodCache.saveOptionParam());
                     }
                     break;
                 }

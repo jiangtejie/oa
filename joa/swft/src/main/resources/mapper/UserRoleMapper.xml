@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.joa.swft.dao.UserRoleMapper">
+
+    <select id="selectRoleByUserId" resultType="string" parameterType="int">
+        SELECT
+          r.`role_en_name`
+        FROM
+          role r
+        WHERE r.`id` IN
+          (SELECT
+            ur.`role_id`
+          FROM
+            user_role ur
+          WHERE ur.`user_id` = #{userId})
+    </select>
+
+    <insert id="batchInsertUserAndRole">
+        insert into user_role (user_id,role_id,create_time) values
+        <foreach collection="roleIds" item="roleId" separator="," index="index">
+            (#{userId},#{roleId},NOW())
+        </foreach>
+    </insert>
+</mapper>

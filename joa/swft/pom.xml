@@ -17,7 +17,7 @@
     <properties>
         <swagger2.version>2.7.0</swagger2.version>
         <hutool.version>5.1.0</hutool.version>
-        <jjwt.version>0.9.0</jjwt.version>
+        <jose4j.version>0.7.0</jose4j.version>
         <mybatis-plus.version>3.3.1.tmp</mybatis-plus.version>
         <druid.version>1.1.10</druid.version>
         <common-io.version>2.6</common-io.version>
@@ -46,10 +46,11 @@
         </dependency>
 
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>${jjwt.version}</version>
+            <groupId>org.bitbucket.b_c</groupId>
+            <artifactId>jose4j</artifactId>
+            <version>${jose4j.version}</version>
         </dependency>
+
 
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -64,9 +65,19 @@
         </dependency>
 
         <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${common-io.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
         </dependency>
 
         <dependency>
@@ -91,6 +102,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <dependency>

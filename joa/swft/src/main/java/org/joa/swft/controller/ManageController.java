@@ -1,7 +1,6 @@
 package org.joa.swft.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +20,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
-import java.util.Map;
 
 /**
  * @author JiangTeJie
@@ -87,7 +85,17 @@ public class ManageController {
     @ApiOperation(value = "查询用户")
     @GetMapping("user")
     public ResultVO getUser() {
-        return ResultVO.success(userService.list());
+        QueryWrapper<User> wrapper = new QueryWrapper();
+        wrapper.select("number","real_name","gender","age","address","is_enabled");
+        return ResultVO.success(userService.list(wrapper));
+    }
+
+    @ApiOperation(value = "根据id查询用户")
+    @GetMapping("user/{id}")
+    public ResultVO getUserById(@PathVariable("id") @Min(value = 0) Integer id){
+        QueryWrapper<User> wrapper = new QueryWrapper();
+        wrapper.setEntity(new User(id));
+        return ResultVO.success(userService.list(wrapper));
     }
 
     @GetMapping("user/page/{currentPage}")

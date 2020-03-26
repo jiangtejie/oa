@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,6 +19,8 @@ import java.util.Date;
 
 @Data
 @TableName(value = "log")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Log extends Model<Log> implements Serializable {
 
     @TableId(value = "id",type = IdType.AUTO)

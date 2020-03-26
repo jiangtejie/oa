@@ -21,4 +21,6 @@ public @interface OptionLog {
 
     String optionDesc() default "";  // 操作说明
 
+    boolean saveOptionParam() default false;  //是否保存操作内容
+
 }

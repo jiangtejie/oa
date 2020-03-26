@@ -1,61 +1,51 @@
 package org.joa.swft.util;
 
-import org.json.JSONObject;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
 import java.util.UUID;
-import org.apache.commons.codec.binary.Base64;
 
+import com.alibaba.fastjson.JSONObject;
 
-public class ZegouUtils {
-
-    public static void main(String[] args) {
-        String appid = "0000000000";  //即构分配的appId
-        String appSign = "0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00";  //即构分配的appSign
-        String idName = "xxxxxxx"; //这里的idname需要和小程序sdk前端传入的idname一致，
-        //否则校验失败(因为这里的idname是为了校验和前端传进来的idname是否一致)。
-        String Token = getZeGouToken(appid,appSign,idName);
-        System.out.println("--Token--:"+Token);
-    }
+public class RoomTokenUtil {
 
     /**
      * 拉流端获取登录token
-     * @param appId  即构分配的appId
+     *
+     * @param appId   即构分配的appId
      * @param appSign 即构分配的appSign
-     * @param idName //这里的idname需要和小程序sdk前端传入的idname一致，
-    //否则校验失败(因为这里的idname是为了校验和前端传进来的idname是否一致)。
+     * @param idName  //这里的idname需要和小程序sdk前端传入的idname一致，
+     *                //否则校验失败(因为这里的idname是为了校验和前端传进来的idname是否一致)。
      * @return
      */
-    public static String getZeGouToken(String appId,String appSign,String idName){
+    public static String getZeGouToken(String appId, String appSign, String idName) {
 
-        String nonce= UUID.randomUUID().toString().replaceAll("-", "");
-        long time = System.currentTimeMillis()/1000+30*60;
-        String appSign32=new String(appSign.replace("0x", "").replace(",", "").substring(0, 32));
-        System.out.println("appSign:"+time+"    "+appSign32+"    "+nonce);
+        String nonce = UUID.randomUUID().toString().replaceAll("-", "");
+        long time = System.currentTimeMillis() / 1000 + 30 * 60;
+        String appSign32 = new String(appSign.replace("0x", "").replace(",", "").substring(0, 32));
+        System.out.println("appSign:" + time + "    " + appSign32 + "    " + nonce);
 
-        if(appSign32.length()<32){
+        if (appSign32.length() < 32) {
             System.out.println("private sign erro!!!!");
             return null;
         }
 
-        String sourece= getPwd(appId+appSign32+idName+nonce+time);
-        System.out.println("hash:"+sourece);
+        String sourece = getPwd(appId + appSign32 + idName + nonce + time);
+        System.out.println("hash:" + sourece);
 
-        JSONObject json=new JSONObject();
+        JSONObject json = new JSONObject();
         json.put("ver", 1);
         json.put("hash", sourece);
         json.put("nonce", nonce);
-        json.put("expired",time); //unix时间戳，单位为秒
+        json.put("expired", time); //unix时间戳，单位为秒
         org.apache.commons.codec.binary.Base64 base64 = new org.apache.commons.codec.binary.Base64();
-        System.out.println("json"+json.toString());
+        System.out.println("json" + json.toString());
         return base64.encodeAsString(json.toString().getBytes());
     }
 
 
     /**
      * 获取MD5加密
+     *
      * @param pwd 需要加密的字符串
      * @return String字符串 加密后的字符串
      */

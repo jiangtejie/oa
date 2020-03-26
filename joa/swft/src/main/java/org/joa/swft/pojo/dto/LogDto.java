@@ -18,4 +18,6 @@ public class LogDto {
     private String optionType;
 
     private String optionDesc;
+
+    private Boolean saveOptionParam;
 }

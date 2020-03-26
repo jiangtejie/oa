@@ -5,7 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.joa.swft.config.GuavaCacheConfig;
 import org.joa.swft.manager.sercurity.AuthUser;
-import org.joa.swft.util.JwtUtil;
+import org.joa.swft.service.CustomUserDetailService;
+import org.joa.swft.service.impl.TokenAuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,10 +31,10 @@ import java.io.IOException;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private TokenAuthorizationService tokenAuthorizationService;
 
-    @Resource(name = "userInfoCache")
-    private Cache<String, AuthUser> userInfoCache;
+    @Autowired
+    private CustomUserDetailService customUserDetailService;
 
     private final String tokenHeader="Authorization";
 
@@ -49,13 +50,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             authTokenParam = authHeader;
         }
 
+        //token校验，是否是合理的token
         if (StringUtils.isNotBlank(authTokenParam)) {
 
             String username = null, role = null;
 
             try {
-                username = jwtUtil.getClaimsFromToken(authTokenParam).get("username").toString();
-                role = jwtUtil.getClaimsFromToken(authTokenParam).get("roles").toString();
+                username = tokenAuthorizationService.verifyToken(authTokenParam);
             } catch (Exception e) {
                 log.debug("异常详情", e);
                 log.info("无效token");
@@ -65,8 +66,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 log.debug("解析token(username({}),role({}))",username,role);
             }
             // 如果jwt正确解出账号信息，说明是合法用户，设置认证信息，认证通过
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userInfoCache.getIfPresent(GuavaCacheConfig.USER_INFO_CACHE);
+            if (null != username  && null == SecurityContextHolder.getContext().getAuthentication()) {
+
+                //每次请求 都重新加载一遍权限
+                UserDetails userDetails = customUserDetailService.loadUserByUsername(username);
+
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 // 把请求的信息设置到UsernamePasswordAuthenticationToken details对象里面，包括发请求的ip等

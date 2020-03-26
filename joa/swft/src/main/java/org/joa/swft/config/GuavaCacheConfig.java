@@ -13,14 +13,4 @@ import java.util.concurrent.TimeUnit;
 @EnableCaching
 public class GuavaCacheConfig {
 
-    public final static String USER_INFO_CACHE = "currentUser";
-
-    /**
-     * 用户角色信息缓存
-     * @return
-     */
-    @Bean(name = "userInfoCache")
-    public Cache<String, AuthUser> userInfoCache() {
-        return CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.DAYS).build();
-    }
 }

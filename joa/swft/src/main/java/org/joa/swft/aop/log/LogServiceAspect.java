@@ -67,7 +67,7 @@ public class LogServiceAspect {
         log.setOptionType(logDto.getOptionType());
         log.setRemark(logDto.getOptionDesc());
         log.setCreateTime(new Date());
-        if(!params.isEmpty()){
+        if(logDto.getSaveOptionParam()){
             log.setOptionParams(JSONObject.toJSONString(params));
         }
         log.setIp(ip);
