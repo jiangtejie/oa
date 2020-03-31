@@ -17,13 +17,19 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    hidden: true
+    hidden: true // 是否需要隐藏，即不需要显示到左侧菜单栏
   },
 
   // 404
   {
     path: '/404',
     component: () => import('@/views/404'),
+    hidden: true
+  },
+
+  {
+    path: '/personal',
+    component: () => import('@/views/personal'),
     hidden: true
   },
 
@@ -40,14 +46,14 @@ export const constantRoutes = [
     }]
   },
 
-  // 系统管理
+  // 平台管理
   {
     path: '/manage',
     component: Layout,
     redirect: '/manage/user',
     meta: {
-      title: '系统管理',
-      icon: 'manage2',
+      title: '平台管理',
+      icon: 'pt',
       roles: ['admin']
     },
     children: [{
@@ -73,6 +79,12 @@ export const constantRoutes = [
       name: 'check',
       component: () => import('@/views/manage/check/index'),
       meta: { title: '系统分析', icon: 'check-2' }
+    },
+    {
+      path: 'dept',
+      name: 'dept',
+      component: () => import('@/views/manage/department'),
+      meta: { title: '部门管理', icon: 'manage2' }
     }]
   },
 

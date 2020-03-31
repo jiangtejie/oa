@@ -22,7 +22,7 @@ module.exports = {
   // build时放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录
   assetsDir: 'static',
   // 是否在开发环境下通过 eslint-loader 在每次保存时 lint 代码 (在生产构建时禁用 eslint-loader)
-  lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: process.env.NODE_ENV === 'production',
   // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建
   productionSourceMap: false,
   devServer: {
@@ -40,7 +40,7 @@ module.exports = {
     proxy: {
       // 开发环境
       '/dev-api': {
-        target: 'http://localhost',
+        target: 'http://localhost:8081',
         changeOrigin: true,
         ws: true,
         pathRewrite: {
@@ -49,7 +49,7 @@ module.exports = {
       },
       // 线上环境
       '/prod-api': {
-        target: 'http://www.jiangtejie.com',
+        target: 'http://localhost:8081',
         changeOrigin: true,
         ws: true,
         pathRewrite: {

@@ -16,7 +16,7 @@
           <p />
           <el-table
             v-loading="loading"
-            :data="userListData.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
+            :data="userListData"
             border
             stripe
             max-height="800"
@@ -28,7 +28,7 @@
               sortable
               prop="number"
               label="工号"
-              width="150"
+              width="400"
             />
             <el-table-column
               prop="realName"
@@ -38,14 +38,20 @@
             />
             <el-table-column
               sortable
-              prop="value"
-              label="取值"
-              width="300"
+              prop="gender"
+              label="性别"
+              width="150"
             />
             <el-table-column
               sortable
-              prop="description"
-              label="描述"
+              prop="age"
+              label="年龄"
+              width="150"
+            />
+            <el-table-column
+              sortable
+              prop="address"
+              label="地址"
             />
 
             <el-table-column
@@ -64,7 +70,7 @@
             <el-pagination
               hide-on-single-page="true"
               background
-              :page-size="pageSize"
+              :page-size="listQuery.pageSize"
               layout="prev, pager, next"
               :total="totalPageSize"
               style="text-align: center; "
@@ -72,54 +78,28 @@
               @current-change="handleCurrentChange"
             />
           </div>
-
           <div class="addUserWindow">
-            <el-dialog title="收货地址" :visible.sync="dialogFormVisible" center>
+            <el-dialog title="新增用户" :visible.sync="dialogFormVisible" center>
               <el-form ref="userForm" :model="userForm" label-width="80px">
-                <el-form-item label="活动名称">
-                  <el-input v-model="userForm.name" />
+                <el-form-item label="账号">
+                  <el-input v-model="userForm.username" />
                 </el-form-item>
-                <el-form-item label="活动区域">
-                  <el-select v-model="userForm.region" placeholder="请选择活动区域">
-                    <el-option label="区域一" value="shanghai" />
-                    <el-option label="区域二" value="beijing" />
+                <el-form-item label="密码">
+                  <el-input v-model="userForm.password" />
+                </el-form-item>
+                <el-form-item label="所属部门">
+                  <el-select placeholder="请选择所在岗位">
+                    <el-option v-for="(item,idx) in departmentList" :key="idx" label="销售部" value="shanghai" />
                   </el-select>
                 </el-form-item>
-                <el-form-item label="活动时间">
-                  <el-col :span="11">
-                    <el-date-picker v-model="userForm.date1" type="date" placeholder="选择日期" style="width: 100%;" />
-                  </el-col>
-                  <el-col class="line" :span="2">-</el-col>
-                  <el-col :span="11">
-                    <el-time-picker v-model="userForm.date2" placeholder="选择时间" style="width: 100%;" />
-                  </el-col>
-                </el-form-item>
-                <el-form-item label="即时配送">
-                  <el-switch v-model="userForm.delivery" />
-                </el-form-item>
-                <el-form-item label="活动性质">
-                  <el-checkbox-group v-model="userForm.type">
-                    <el-checkbox label="美食/餐厅线上活动" name="type" />
-                    <el-checkbox label="地推活动" name="type" />
-                    <el-checkbox label="线下主题活动" name="type" />
-                    <el-checkbox label="单纯品牌曝光" name="type" />
-                  </el-checkbox-group>
-                </el-form-item>
-                <el-form-item label="特殊资源">
-                  <el-radio-group v-model="userForm.resource">
-                    <el-radio label="线上品牌商赞助" />
-                    <el-radio label="线下场地免费" />
-                  </el-radio-group>
-                </el-form-item>
-                <el-form-item label="活动形式">
-                  <el-input v-model="userForm.desc" type="textarea" />
-                </el-form-item>
+
                 <el-form-item>
-                  <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                  <el-button type="primary" @click="addUser">立即创建</el-button>
                   <el-button @click="dialogFormVisible = false">取消</el-button>
                 </el-form-item>
               </el-form>
-            </el-dialog></div>
+            </el-dialog>
+          </div>
         </div>
       </template>
     </el-card>
@@ -127,6 +107,7 @@
 </template>
 
 <script>
+import { getUserList } from '@/api/user'
 
 export default {
   components: {
@@ -135,47 +116,45 @@ export default {
   data() {
     return {
       keyword: '',
-      totalPageSize: 7, // 数据总条数
-      pageSize: 5, // 每页显示数量
-      pageNum: 1, //
-      currentPage: 1, // 当前页
-      userListData: [
-        {
-          number: 1,
-          realName: '江三'
-        }
-      ],
       sort: {},
       loading: true,
+      listQuery: {
+        currentPage: 1,
+        pageSize: 10
+      },
+      totalPageSize: 1,
+      userListData: [],
       dialogFormVisible: false,
       userForm: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      }
+        username: '',
+        password: ''
+      },
+      departmentList: []
     }
   },
-  mounted() {
+  created() {
     this.getUserPage()
+  },
+  mounted() {
+
   },
   methods: {
     showAddUserWindow() {
       this.dialogFormVisible = true
     },
     // 获取用户数据
-    getUserPage() {
+    async getUserPage() {
+      this.loading = true
+      const { data } = await getUserList(this.listQuery)
+      this.userListData = data.data
+      this.totalPageSize = data.total
       this.loading = false
     },
     handleSizeChange(val) {
-      this.pageSize = val
+      this.listQuery.pageSize = val
     },
     handleCurrentChange(val) {
-      this.currentPage = val
+      this.listQuery.currentPage = val
     },
     // 查看用户详细信息
     handleClick(row) {

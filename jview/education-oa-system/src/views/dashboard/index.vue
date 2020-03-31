@@ -73,32 +73,6 @@
         </el-card>
       </div>
 
-      <!-- 邮箱 -->
-      <div class="index-item">
-        <el-card class="main-box-card">
-          <div slot="header" class="clearfix">
-            <span class="svg-container">
-              <svg-icon icon-class="email" />
-            </span>
-            <span><b>邮箱</b></span>
-            <el-button style="float: right; padding: 3px 0; color:gray" type="text">更多</el-button>
-          </div>
-          <div v-for="o in 4" :key="o" class="text item">
-            <div>
-              <span class="svg-container">
-                <svg-icon icon-class="right" />
-              </span>
-              {{ '列表内容 ' + o }}
-            </div>
-            <div>
-              <span class="item-status">
-                已办
-              </span>
-            </div>
-          </div>
-        </el-card>
-      </div>
-
       <!-- 请假信息 -->
       <div class="index-item">
         <el-card class="main-box-card">
@@ -135,17 +109,19 @@
             <span><b>通知</b></span>
             <el-button style="float: right; padding: 3px 0; color:gray" type="text">更多</el-button>
           </div>
-          <div v-for="o in 4" :key="o" class="text item">
-            <div>
-              <span class="svg-container">
-                <svg-icon icon-class="right" />
-              </span>
-              {{ '列表内容 ' + o }}
-            </div>
-            <div>
-              <span>2020-3-20 14:00</span>
-            </div>
-          </div>
+          <vue-seamless-scroll :data="noticeList" style="overflow: hidden; margin-top: -14px;" :class-option="optionSingleHeight">
+            <ul class="notice-ul">
+              <li v-for="(item,idx) in noticeList" :key="idx">
+                <div>
+                  <span class="svg-container">
+                    <svg-icon icon-class="right" />
+                  </span>
+                  <span class="title" v-text="item.title" />
+                </div>
+                <span class="date" v-text="item.date" />
+              </li>
+            </ul>
+          </vue-seamless-scroll>
         </el-card>
       </div>
     </div>
@@ -220,6 +196,43 @@ export default {
   data() {
     const self = this.localtion
     return {
+      noticeList: [
+        {
+          'title': '无缝滚动第一行',
+          'date': '2017-12-16'
+        },
+        {
+          'title': '无缝滚动第二行',
+          'date': '2017-12-16'
+        },
+        {
+          'title': '无缝滚动第三行',
+          'date': '2017-12-16'
+        },
+        {
+          'title': '无缝滚动第四行',
+          'date': '2017-12-16'
+        },
+        {
+          'title': '无缝滚动第五行',
+          'date': '2017-12-16'
+        },
+        {
+          'title': '无缝滚动第六行',
+          'date': '2017-12-16'
+        },
+        {
+          'title': '无缝滚动第七行',
+          'date': '2017-12-16'
+        },
+        {
+          'title': '无缝滚动第八行',
+          'date': '2017-12-16'
+        },
+        {
+          'title': '无缝滚动第九行',
+          'date': '2017-12-16'
+        }],
       activeName: 'first',
       clockDialog: false,
       roomDialog: false,
@@ -282,7 +295,12 @@ export default {
   computed: {
     ...mapGetters([
       'name'
-    ])
+    ]),
+    optionSingleHeight() {
+      return {
+        singleHeight: 34
+      }
+    }
   },
   created() {
     this.clockForm.name = this.name
@@ -505,8 +523,8 @@ display: table;
 }
 
 .main-box-card {
-  width: 20vw;
-  min-height: 200px;
+  width: 27vw;
+  height: 320px;
 }
 
 .work-module-item:hover{
@@ -526,7 +544,7 @@ display: table;
 }
 
 .index-item{
-  margin: 50px 10px 10px 10px
+  margin: 50px 10px 10px 10px;
 }
 
 // 打卡页面
@@ -541,6 +559,25 @@ display: table;
 .video-room{
   width: 200px;
   height: 200px;
+}
+
+.notice-ul{
+  list-style: none;
+  font-size: 14px;
+  padding: 0px;
+}
+
+.notice-ul li{
+  margin-bottom: 18px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 18px 0;
+}
+
+.notice-ul li:hover{
+  background:#a5b6c8;
+  cursor:pointer;
 }
 
 // ===================================================响应css====================================  //

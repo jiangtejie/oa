@@ -21,7 +21,16 @@ import Trend from 'vuetrend'
 import echarts from 'echarts'
 // 地图
 import VueAMap from 'vue-amap'
+// 粒子特效
+import VueParticles from 'vue-particles'
+// 走马字
+import scroll from 'vue-seamless-scroll'
+// 树形结构
+import Vue2OrgTree from 'vue2-org-tree'
 
+Vue.use(Vue2OrgTree)
+Vue.use(scroll)
+Vue.use(VueParticles)
 VueAMap.initAMapApiLoader({
   key: '06ced02bbb7ee175eb39a47fed5158fe',
   plugin: [

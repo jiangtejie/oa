@@ -16,6 +16,14 @@ export function getInfo(token) {
   })
 }
 
+export function getUserList(listQuery) {
+  return request({
+    url: `/user/page`,
+    method: 'get',
+    params: listQuery
+  })
+}
+
 export function logout() {
   return request({
     url: '/user/logout',
