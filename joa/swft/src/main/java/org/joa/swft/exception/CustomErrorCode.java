@@ -10,10 +10,13 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2019/12/2916:44
  */
 public enum CustomErrorCode {
-
-    LOGIN_FIRST(HttpServletResponse.SC_UNAUTHORIZED,"请先登录!"),
-    ACCESS_DENIED(HttpServletResponse.SC_FORBIDDEN,"权限不足!"),
-    INVALID_TOKEN(HttpServletResponse.SC_UNAUTHORIZED,"失效token!");
+    /**
+     * 50008：不正确的token值 ；
+     * 50012：有其他的客户端已经登录；
+     * 50014：token过期
+     */
+    ACCESS_DENIED(50401,"权限不足!"),
+    INVALID_TOKEN(50014,"失效token!");
 
     private int code;
 

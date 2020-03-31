@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @TableName(value = "permission")
-public class Permission extends Model<Permission> implements Serializable {
+public class Permission extends BaseEntity implements Serializable {
 
     @TableId(value = "id")
     private Integer id;

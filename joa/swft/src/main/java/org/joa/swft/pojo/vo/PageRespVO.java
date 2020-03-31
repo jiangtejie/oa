@@ -14,10 +14,10 @@ import java.util.List;
 public class PageRespVO<T> {
 
     /**当前页*/
-    private Long current;
+    private Long currentPage;
 
     /**一页数据条数*/
-    private Long size;
+    private Long pageSize;
 
     /**总数*/
     private Long total;
@@ -26,13 +26,9 @@ public class PageRespVO<T> {
     private List<T> data;
 
     public PageRespVO(Page<T> page){
-        this.current = page.getCurrent();
-        this.size = page.getSize();
+        this.currentPage = page.getCurrent();
+        this.pageSize = page.getSize();
         this.total = page.getTotal();
         this.data = page.getRecords();
-    }
-
-    public static PageRespVO success(Page<User> dataPage) {
-        return new PageRespVO(dataPage);
     }
 }

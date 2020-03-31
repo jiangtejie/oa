@@ -14,8 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-
-import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -58,12 +56,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             try {
                 username = tokenAuthorizationService.verifyToken(authTokenParam);
             } catch (Exception e) {
-                log.debug("异常详情", e);
-                log.info("无效token");
-            }
-
-            if(log.isDebugEnabled()){
-                log.debug("解析token(username({}),role({}))",username,role);
+                log.error("登录过期");
             }
             // 如果jwt正确解出账号信息，说明是合法用户，设置认证信息，认证通过
             if (null != username  && null == SecurityContextHolder.getContext().getAuthentication()) {

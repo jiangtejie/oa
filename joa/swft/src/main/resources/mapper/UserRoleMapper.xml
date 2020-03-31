@@ -21,4 +21,8 @@
             (#{userId},#{roleId},NOW())
         </foreach>
     </insert>
+
+    <delete id="deleteByRoleId" parameterType="int">
+        delete from user_role where role_id = #{id}
+    </delete>
 </mapper>

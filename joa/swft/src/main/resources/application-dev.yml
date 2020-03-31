@@ -33,8 +33,8 @@ spring:
 #mybatis配置
 mybatis-plus:
   mapper-locations: classpath:mapper/*Mapper.xml
-  #配置mybatis打印sql语句
   configuration:
+    #配置mybatis打印sql语句
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #开启驼峰转换
     map-underscore-to-camel-case: true

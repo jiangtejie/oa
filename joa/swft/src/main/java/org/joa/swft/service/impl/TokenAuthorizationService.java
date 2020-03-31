@@ -38,7 +38,7 @@ public class TokenAuthorizationService {
     /**
      * 过期时间
      */
-    public static long accessTokenExpirationTime = 60 * 60 * 24;
+    public static long accessTokenExpirationTime = 60 * 60;
 
     /**
      * 创建token
@@ -101,9 +101,7 @@ public class TokenAuthorizationService {
 
             JwtClaims claims = consumer.processToClaims(token);
             if (claims != null) {
-                System.out.println("认证通过！");
                 String account = (String) claims.getClaimValue("account");
-                System.out.println("token payload携带的自定义内容:用户账号account=" + account);
                 return account;
             }
         }  catch (JoseException e) {

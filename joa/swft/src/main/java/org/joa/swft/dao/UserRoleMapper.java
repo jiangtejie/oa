@@ -22,4 +22,11 @@ public interface UserRoleMapper {
      * @return
      */
     int batchInsertUserAndRole(int userId, List<Integer> roleIds);
+
+    /**
+     * 根据角色id删除用户与角色的绑定记录
+     * @param id
+     * @return
+     */
+    int deleteByRoleId(Integer id);
 }

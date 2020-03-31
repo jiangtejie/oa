@@ -9,4 +9,5 @@ import org.joa.swft.pojo.entity.Role;
  */
 public interface RoleService extends IService<Role>{
 
+    boolean deleteRoleById(Integer id);
 }

@@ -55,20 +55,28 @@ public class User extends BaseEntity<User> implements Serializable {
     @NotNull(message = "姓名不能为空",groups = {Add.class})
     private String realName;
 
+    @TableField(value = "avatar")
+    private String avatar;
+
     /**性别*/
     @TableField(value = "gender")
     @Range(min = 0,max = 1,message = "请正确填写性别",groups = {Add.class})
-    private int gender;
+    private Integer gender;
 
     /**年龄*/
     @TableField(value = "age")
     @Range(min = 1,max = 100,message = "请正确填写年龄",groups = {Add.class})
-    private int age;
+    private Integer age;
 
     /**地址*/
     @TableField(value = "address")
     @NotNull(message = "地址不能为空")
     private String address;
+
+    /**部门id*/
+    @TableField(value = "dept_id")
+    @NotNull(message = "部门不能为空",groups = {Add.class})
+    private Integer deptId;
 
     /**登录ip*/
     @TableField(value = "login_ip")

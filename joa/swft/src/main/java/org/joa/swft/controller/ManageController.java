@@ -1,9 +1,11 @@
 package org.joa.swft.controller;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.joa.swft.pojo.entity.Department;
 import org.joa.swft.pojo.entity.Permission;
 import org.joa.swft.pojo.entity.Role;
 import org.joa.swft.pojo.entity.User;
@@ -11,6 +13,7 @@ import org.joa.swft.pojo.entity.validate.Add;
 import org.joa.swft.pojo.entity.validate.Update;
 import org.joa.swft.pojo.vo.PageRespVO;
 import org.joa.swft.pojo.vo.ResultVO;
+import org.joa.swft.service.DepartmentService;
 import org.joa.swft.service.PermissionService;
 import org.joa.swft.service.RoleService;
 import org.joa.swft.service.UserService;
@@ -29,13 +32,16 @@ import javax.validation.constraints.Min;
 @RestController
 @Validated
 @Api(value = "系统管理相关请求")
-public class ManageController {
+public class ManageController extends BaseController {
 
     @Autowired
     private RoleService roleService;
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @Autowired
     private PermissionService permissionService;
@@ -49,12 +55,12 @@ public class ManageController {
     @ApiOperation(value = "删除角色")
     @DeleteMapping("role/{id}")
     public ResultVO deleteRoleById(@PathVariable("id") @Min(value = 0) Integer id) {
-        return ResultUtil.result(roleService.removeById(id));
+        return ResultUtil.result(roleService.deleteRoleById(id));
     }
 
     @ApiOperation(value = "更新角色")
-    @PutMapping("role")
-    public ResultVO updateRole(@RequestBody @Validated({Update.class}) Role role) {
+    @PutMapping("role/{id}")
+    public ResultVO updateRole(@PathVariable("id") Integer id, @RequestBody @Validated({Update.class}) Role role) {
         return ResultUtil.result(roleService.updateById(role));
     }
 
@@ -82,14 +88,6 @@ public class ManageController {
         return ResultUtil.result(userService.updateById(user));
     }
 
-    @ApiOperation(value = "查询用户")
-    @GetMapping("user")
-    public ResultVO getUser() {
-        QueryWrapper<User> wrapper = new QueryWrapper();
-        wrapper.select("number","real_name","gender","age","address","is_enabled");
-        return ResultVO.success(userService.list(wrapper));
-    }
-
     @ApiOperation(value = "根据id查询用户")
     @GetMapping("user/{id}")
     public ResultVO getUserById(@PathVariable("id") @Min(value = 0) Integer id){
@@ -98,13 +96,14 @@ public class ManageController {
         return ResultVO.success(userService.list(wrapper));
     }
 
-    @GetMapping("user/page/{currentPage}")
-    public PageRespVO getPageUser(@PathVariable("currentPage") int currentPage, @RequestParam(defaultValue = "10") int pageSize){
+    @ApiOperation(value = "分页查询用户")
+    @GetMapping("user/page")
+    public ResultVO getPageUser(@RequestParam(defaultValue = "1") Integer currentPage, @RequestParam(defaultValue = "10") Integer pageSize){
         QueryWrapper<User> wrapper = new QueryWrapper();
         wrapper.select("number","real_name","gender","age","address","is_enabled");
         Page<User> page = new Page<>(currentPage,pageSize);
-        Page<User> DataPage = userService.getBaseMapper().selectPage(page, wrapper);
-        return PageRespVO.success(DataPage);
+        Page<User> dataPage = userService.getBaseMapper().selectPage(page, wrapper);
+        return ResultVO.success(new PageRespVO(dataPage));
     }
 
     @ApiOperation("增加权限")
@@ -126,8 +125,33 @@ public class ManageController {
     }
 
     @ApiOperation("查询权限")
-    @GetMapping(value = "perm")
-    public ResultVO getPerm(){
-        return ResultVO.success(permissionService.list());
+    @GetMapping(value = "perm/page")
+    public ResultVO getPerm(@RequestParam(defaultValue = "1") Integer currentPage, @RequestParam(defaultValue = "10") Integer pageSize){
+        Wrapper<Permission> departmentWrapper = new QueryWrapper<>();
+        Page<Permission> departmentPage = new Page<>(currentPage,pageSize);
+        Page<Permission> permData = permissionService.getBaseMapper().selectPage(departmentPage,departmentWrapper);
+        return ResultVO.success(new PageRespVO<>(permData));
+    }
+
+
+    @ApiOperation("获取部门")
+    @GetMapping(value = "dept/page")
+    public ResultVO getDept(@RequestParam(defaultValue = "1") Integer currentPage, @RequestParam(defaultValue = "10") Integer pageSize){
+        Wrapper<Department> departmentWrapper = new QueryWrapper<>();
+        Page<Department> departmentPage = new Page<>(currentPage,pageSize);
+        Page<Department> departmentData = departmentService.getBaseMapper().selectPage(departmentPage,departmentWrapper);
+        return ResultVO.success(new PageRespVO<>(departmentData));
+    }
+
+    @ApiOperation("删除部门")
+    @DeleteMapping("dept/{id}")
+    public ResultVO deleteDepartment(@PathVariable("id") Integer deptId){
+        return ResultUtil.result(departmentService.removeById(deptId));
+    }
+
+    @ApiOperation("更新部门")
+    @PutMapping("dept")
+    public ResultVO updateDepartment(@RequestBody Department department){
+        return ResultUtil.result(departmentService.updateById(department));
     }
 }

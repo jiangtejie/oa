@@ -6,7 +6,11 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import org.joa.swft.pojo.entity.validate.Add;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,25 +20,21 @@ import java.util.Date;
  */
 @Data
 @TableName(value = "role")
-public class Role extends Model<Role> implements Serializable {
+public class Role extends BaseEntity implements Serializable {
 
     /**主键 id*/
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
-    /**父亲角色名称*/
-    @TableField(value = "parent_id")
-    private Integer parentId;
-
-    /**父角色*/
-    @TableField(exist = false)
-    private Role role;
-
     /**角色名称*/
     @TableField(value = "role_zh_name")
+    @Pattern(regexp = "^[\\u4e00-\\u9fa5]{0,}$",message = "角色名称格式必须为中文", groups = {Add.class})
+    @Size(min = 1,max = 12,message = "角色名称格式必须为1~12个字符之间", groups = {Add.class})
     private String roleZhName;
 
     @TableField(value = "role_en_name")
+    @Pattern(regexp = "^\\w+$",message = "字符代码格式必须由数字或英文字母或下划线组成", groups = {Add.class})
+    @Size(min = 1,max = 12,message = "字符代码格式必须为1~12个字符之间", groups = {Add.class})
     private String roleEnName;
 
     /**创建时间*/

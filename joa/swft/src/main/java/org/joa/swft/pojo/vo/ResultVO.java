@@ -40,7 +40,7 @@ public class ResultVO<T> extends HashMap implements Serializable {
      * @return
      */
     public static <T> ResultVO success(){
-        return new ResultVO(HttpServletResponse.SC_OK,ResultConstant.RESULT_OPTION_SUCCESS_DESC);
+        return new ResultVO(ResultConstant.RESULT_SUCCESS_CODE,ResultConstant.RESULT_OPTION_SUCCESS_DESC);
     }
 
     /**

@@ -117,16 +117,10 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.getWriter().write(objectMapper.writeValueAsString(ResultVO.success(tokenData)));
                 })
                 .failureHandler((request, response, ex) -> {
-                    if (log.isDebugEnabled()) {
-                        log.debug("登录失败({})", ex.getMessage());
-                    }
                     response.getWriter().write(objectMapper.writeValueAsString(ResultVO.error(ex.getMessage())));
                 })
                 .and()
                 .exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
-            if (log.isDebugEnabled()) {
-                log.debug("无效token({})", ex.getMessage());
-            }
             response.getWriter().write(objectMapper.writeValueAsString(ResultVO.error(CustomErrorCode.INVALID_TOKEN)));
         })
                 .accessDeniedHandler((request, response, ex) -> {
@@ -136,9 +130,6 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .invalidateHttpSession(true)
                 .logoutUrl("/user/logout").logoutSuccessHandler((request, response, authentication) -> {
-            if (log.isDebugEnabled()) {
-                log.debug("退出成功");
-            }
             response.getWriter().write(objectMapper.writeValueAsString(ResultVO.success("退出成功!")));
         });
     }

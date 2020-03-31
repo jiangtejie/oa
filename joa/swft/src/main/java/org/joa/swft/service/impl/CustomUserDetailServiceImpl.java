@@ -35,25 +35,16 @@ public class CustomUserDetailServiceImpl extends ServiceImpl<UserMapper, User> i
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>(new User(s));
-
-        if(log.isDebugEnabled()){
-            log.debug("查询用户({})",s);
-        }
-
         User user = userService.getOne(userQueryWrapper);
         if(ObjectUtils.isEmpty(user)){
             throw new UsernameNotFoundException("用户不存在");
         }
         AuthUser authUser = new AuthUser(user);
-
         String authoritiesStr = userService.getUserAuthority(authUser.getUser().getId());
-
         List<GrantedAuthority> authorities = new ArrayList<>(8);
         authorities.addAll(AuthorityUtils.commaSeparatedStringToAuthorityList(authoritiesStr));
         authUser.setAuthority(authorities);
-
         return authUser;
     }
 }

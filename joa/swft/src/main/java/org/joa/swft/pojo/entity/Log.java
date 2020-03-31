@@ -1,9 +1,6 @@
 package org.joa.swft.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -55,6 +52,6 @@ public class Log extends Model<Log> implements Serializable {
     private String remark;
 
     /**创建时间*/
-    @TableField(value = "create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
 }
