@@ -12,7 +12,8 @@
     <artifactId>swft</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>swft</name>
-    <description>Demo project for Spring Boot</description>
+
+    <description>study for vue and SpringBoot</description>
 
     <properties>
         <swagger2.version>2.7.0</swagger2.version>
