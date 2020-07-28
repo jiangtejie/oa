@@ -5,6 +5,7 @@
         <div slot="header" class="clearfix">
           <span><b>{{ item.roleZhName }}</b></span>
           <el-switch
+            v-show="item.roleEnName!=='admin'"
             v-model="item.roleEnable"
             active-text="已开启"
             inactive-text="已冻结"
