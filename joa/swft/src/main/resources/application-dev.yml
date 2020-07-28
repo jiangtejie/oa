@@ -12,11 +12,9 @@ spring:
       initial-size: 5
       min-idle: 5
       maxActive: 20
-      # 配置获取连接等待超时的时间
       maxWait: 60000
       async-close-connection-enable: true
   aop:
-    #使用cglib进行代理
     proxy-target-class: true
   redis:
     host: 127.0.0.1
@@ -30,13 +28,10 @@ spring:
         min-idle: 0 # 连接池中的最小空闲连接
         max-idle: 8 # 连接池中的最大空闲连接
 
-#mybatis配置
 mybatis-plus:
   mapper-locations: classpath:mapper/*Mapper.xml
   configuration:
-    #配置mybatis打印sql语句
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    #开启驼峰转换
     map-underscore-to-camel-case: true
     lazy-loading-enabled: true
     aggressive-lazy-loading: false

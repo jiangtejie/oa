@@ -59,8 +59,8 @@ public class ManageController extends BaseController {
     }
 
     @ApiOperation(value = "更新角色")
-    @PutMapping("role/{id}")
-    public ResultVO updateRole(@PathVariable("id") Integer id, @RequestBody @Validated({Update.class}) Role role) {
+    @PutMapping("role")
+    public ResultVO updateRole(@RequestBody @Validated({Update.class}) Role role) {
         return ResultUtil.result(roleService.updateById(role));
     }
 

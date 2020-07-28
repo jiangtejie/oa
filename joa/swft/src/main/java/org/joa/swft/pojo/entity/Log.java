@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -18,7 +17,7 @@ import java.util.Date;
 @TableName(value = "log")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Log extends Model<Log> implements Serializable {
+public class Log extends Model<Log> {
 
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;

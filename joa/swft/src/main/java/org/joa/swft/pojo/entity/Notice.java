@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 /**
  * 系统消息实体
  * @author JiangTeJie
@@ -18,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Notice extends BaseEntity implements Serializable {
+public class Notice extends BaseEntity {
 
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;

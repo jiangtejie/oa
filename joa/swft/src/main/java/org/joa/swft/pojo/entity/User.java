@@ -16,7 +16,6 @@ import org.joa.swft.pojo.entity.validate.Update;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 /**
  * @author JiangTeJie
@@ -26,7 +25,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "user")
-public class User extends BaseEntity<User> implements Serializable {
+public class User extends BaseEntity<User> {
 
     /**id*/
     /**主键*/

@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 /**
  * @author JiangTeJie
  * @since 2020/3/29 20:32
@@ -19,7 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "department")
-public class Department extends BaseEntity implements Serializable {
+public class Department extends BaseEntity {
 
     /**id序号*/
     @TableId(value = "id",type = IdType.INPUT)

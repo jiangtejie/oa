@@ -4,14 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import org.joa.swft.pojo.entity.validate.Add;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -20,7 +17,7 @@ import java.util.Date;
  */
 @Data
 @TableName(value = "role")
-public class Role extends BaseEntity implements Serializable {
+public class Role extends BaseEntity {
 
     /**主键 id*/
     @TableId(value = "id",type = IdType.AUTO)
