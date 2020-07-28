@@ -1,27 +1,23 @@
 <template>
   <div class="dashboard-container">
     <div class="chart-container">
-      <chart height="100%" width="100%" />
+      
     </div>
   </div>
 </template>
 
 <script>
-import Chart from '@/components/Charts/LineMarker'
-import { mapGetters } from 'vuex'
-
 export default {
-  name: 'Check',
-  components: { Chart },
+  components: { 
+
+  },
   data() {
     return {
 
     }
   },
   computed: {
-    ...mapGetters([
-      'name'
-    ])
+
   },
   created() {
 
