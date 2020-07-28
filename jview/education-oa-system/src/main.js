@@ -25,10 +25,7 @@ import VueAMap from 'vue-amap'
 import VueParticles from 'vue-particles'
 // 走马字
 import scroll from 'vue-seamless-scroll'
-// 树形结构
-import Vue2OrgTree from 'vue2-org-tree'
 
-Vue.use(Vue2OrgTree)
 Vue.use(scroll)
 Vue.use(VueParticles)
 VueAMap.initAMapApiLoader({
