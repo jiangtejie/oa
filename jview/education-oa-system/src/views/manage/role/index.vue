@@ -11,7 +11,7 @@
             active-color="#13ce66"
             inactive-color="#ff4949"
             style="float:right"
-            @change="changeRoleStatus()"
+            @change="changeRoleStatus(item.id,item.roleEnable)"
           />
         </div>
         <div class="role-desc">
@@ -22,7 +22,8 @@
           <p>
             <el-row style="display: flex;justify-content: flex-start ">
               <el-button type="info" plain>权限设置</el-button>
-              <el-button type="danger" plain @click="deleteRole(item.id)">删除</el-button>
+              <el-button type="primary" plain>关联用户</el-button>
+              <el-button v-show="item.roleEnName!=='admin'" type="danger" plain @click="deleteRole(item.id)">删除</el-button>
             </el-row>
           </p>
         </div>
@@ -95,8 +96,8 @@ export default {
       this.loading = false
     },
 
-    changeRoleStatus() {
-      updateRoleStatus()
+    changeRoleStatus(roleId, roleEnable) {
+      updateRoleStatus({id:roleId, roleEnable:roleEnable})
     },
 
     async addRole() {
