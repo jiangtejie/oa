@@ -495,7 +495,7 @@ display: table;
 }
 
 .header-box-card{
-  min-height: 500px;
+  min-height: 45vh;
   width: 100%;
 }
 
@@ -518,13 +518,13 @@ display: table;
 
 .main-block{
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 
 .main-box-card {
-  width: 27vw;
-  height: 320px;
+  width: 20vw;
+  height: 36vh;
 }
 
 .work-module-item:hover{
