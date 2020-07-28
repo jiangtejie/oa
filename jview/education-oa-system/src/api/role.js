@@ -9,11 +9,11 @@ export function getRoleList() {
 }
 
 // 修改角色状态
-export function updateRoleStatus(roleId, roleEnable) {
+export function updateRoleStatus(roleInfo) {
   return request({
-    url: `/role/${roleId}`,
+    url: `/role`,
     method: 'put',
-    roleEnable
+    data: roleInfo
   })
 }
 
