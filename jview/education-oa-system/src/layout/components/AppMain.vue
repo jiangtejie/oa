@@ -11,13 +11,24 @@
 
 <script>
 export default {
-  name: 'AppMain',
+  name: "AppMain",
+  data(){
+    return {
+
+    }
+  },
   computed: {
     key() {
-      return this.$route.path
-    }
-  }
-}
+      return this.$route.path;
+    },
+  },
+  watch:{
+
+  },
+  mounted() {
+    this.$store.dispatch("ws/init");
+  },
+};
 </script>
 
 <style scoped>
@@ -28,7 +39,7 @@ export default {
   position: relative;
   overflow: hidden;
 }
-.fixed-header+.app-main {
+.fixed-header + .app-main {
   padding-top: 50px;
 }
 </style>
