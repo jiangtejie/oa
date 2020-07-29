@@ -1,8 +1,13 @@
 <template>
   <div class="login-container">
-
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      auto-complete="on"
+      label-position="left"
+    >
       <div class="title-container">
         <h3 class="title">OA集成系统</h3>
       </div>
@@ -42,13 +47,17 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width:100%;margin-bottom:30px;"
+        @click.native.prevent="handleLogin"
+      >登录</el-button>
 
       <div class="tips">
         <span style="margin-right:20px;">账号: admin</span>
-        <span> 密码: 123456</span>
+        <span>密码: 123456</span>
       </div>
-
     </el-form>
     <vue-particles
       color="#fff"
@@ -72,78 +81,85 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-import Qs from 'qs'
+import { validUsername } from "@/utils/validate";
+import Qs from "qs";
 
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('用户名格式不正确'))
+        callback(new Error("用户名格式不正确"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码不得少于6位'))
+        callback(new Error("密码不得少于6位"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        username: "admin",
+        password: "123456",
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [
+          { required: true, trigger: "blur", validator: validateUsername },
+        ],
+        password: [
+          { required: true, trigger: "blur", validator: validatePassword },
+        ],
       },
       loading: false,
-      passwordType: 'password',
-      redirect: undefined
-    }
+      passwordType: "password",
+      redirect: undefined,
+    };
   },
   watch: {
     $route: {
-      handler: function(route) {
-        this.redirect = route.query && route.query.redirect
+      handler: function (route) {
+        this.redirect = route.query && route.query.redirect;
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
+      if (this.passwordType === "password") {
+        this.passwordType = "";
       } else {
-        this.passwordType = 'password'
+        this.passwordType = "password";
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
+        this.$refs.password.focus();
+      });
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.loading = true
+          this.loading = true;
           // 分发action, action名称位login ， user是store子模块
-          this.$store.dispatch('user/login', Qs.stringify(this.loginForm)).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
+          this.$store
+            .dispatch("user/login", Qs.stringify(this.loginForm))
+            .then(() => {
+              this.$router.push({ path: this.redirect || "/" });
+              this.loading = false;
+            })
+            .catch(() => {
+              this.loading = false;
+            });
         } else {
-          console.log('error submit!!')
-          return false
+          console.log("error submit!!");
+          return false;
         }
-      })
+      });
     }
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">
@@ -151,9 +167,9 @@ export default {
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 //下拉框选择时候，输入框的背景颜色
-$bg:#283443;
+$bg: #283443;
 //输入框文字的颜色
-$light_gray:#fff;
+$light_gray: #fff;
 //光标颜色
 $cursor: #fff;
 
@@ -198,11 +214,11 @@ $cursor: #fff;
 
 <style lang="scss" scoped>
 //
-$bg:#2d3a4b;
+$bg: #2d3a4b;
 // 图标的颜色
-$dark_gray:#889aa4;
+$dark_gray: #889aa4;
 //标题颜色
-$light_gray:#eee;
+$light_gray: #eee;
 
 .login-container {
   min-height: 100%;
@@ -262,11 +278,11 @@ $light_gray:#eee;
     user-select: none;
   }
 }
-  .particles-js{
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
+.particles-js {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 </style>

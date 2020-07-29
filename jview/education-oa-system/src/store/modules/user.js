@@ -64,10 +64,11 @@ const actions = {
   },
 
   // user logout
-  logout({ commit, state }) {
+  logout({ commit,dispatch, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
+        dispatch('ws/close', null, { root: true }) 
         removeToken()
         resetRouter()
         resolve()
