@@ -16,6 +16,7 @@
     <description>study for vue and SpringBoot</description>
 
     <properties>
+        <neyty.version>4.1.51.Final</neyty.version>
         <swagger2.version>2.7.0</swagger2.version>
         <hutool.version>5.1.0</hutool.version>
         <jose4j.version>0.7.0</jose4j.version>
@@ -29,6 +30,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${neyty.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
