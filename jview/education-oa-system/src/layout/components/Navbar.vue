@@ -74,6 +74,9 @@ export default {
       'avatar'
     ])
   },
+  mounted(){
+    this.$store.dispatch("ws/init");
+  },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')

@@ -24,10 +24,7 @@ export default {
   },
   watch:{
 
-  },
-  mounted() {
-    this.$store.dispatch("ws/init");
-  },
+  }
 };
 </script>
 
