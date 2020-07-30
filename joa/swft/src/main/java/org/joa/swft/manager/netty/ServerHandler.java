@@ -4,7 +4,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.UnsupportedEncodingException;
@@ -14,15 +13,13 @@ import java.nio.charset.Charset;
  * @author jtj
  */
 @Slf4j
-public class ServerHandler extends ChannelInboundHandlerAdapter {
+public class ServerHandler extends ChannelInboundHandlerAdapter implements ConnectManager {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws UnsupportedEncodingException {
         if(msg instanceof FullHttpRequest){
             ByteBuf byteBuf = (ByteBuf) msg;
             System.out.print(byteBuf.toString(Charset.defaultCharset()));
-        }else{
-            log.warn("非tcp连接");
         }
         ctx.fireChannelRead(msg);
     }
@@ -34,12 +31,14 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        log.warn("客户端开始登录");
+        socketClientNums.incrementAndGet();
+        log.warn("当前在线连接数{}",socketClientNums.get());
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        log.warn("客户端退出");
+        socketClientNums.decrementAndGet();
+        log.warn("当前在线连接数{}",socketClientNums.get());
     }
 
     @Override

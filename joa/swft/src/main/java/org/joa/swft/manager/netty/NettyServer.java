@@ -47,7 +47,7 @@ public class NettyServer {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         log.warn("Start Netty ......");
                         //ch.pipeline().addLast()就是添加一个逻辑处理器。
-                        socketChannel.pipeline().addLast(new ServerHandler());
+                        socketChannel.pipeline().addLast(new ServerHandler()); //处理tcp协议传输的数据
                         socketChannel.pipeline().addLast(new HttpServerCodec()); // http 编码
                         socketChannel.pipeline().addLast(new HttpObjectAggregator(65536)); // http 消息聚合器
                         socketChannel.pipeline().addLast(new WebSocketServerCompressionHandler()); // 压缩 可以不设置
