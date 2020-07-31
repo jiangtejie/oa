@@ -15,18 +15,22 @@ import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketSe
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * @author jtj
  */
 @Slf4j
+@Component
 public class NettyServer {
 
+    @Value("${netty.port}")
     private int port;
 
-    public NettyServer(int port) {
-        this.port = port;
-    }
+    @Autowired
+    public WebSocketFrameHandler webSocketFrameHandler;
 
     public void start() {
         //bossLoopGroup 表示服务器连接监听线程组，专门接受 accept 新的客户端client 连接
@@ -45,14 +49,12 @@ public class NettyServer {
 
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        log.warn("Start Netty ......");
-                        //ch.pipeline().addLast()就是添加一个逻辑处理器。
-                        socketChannel.pipeline().addLast(new ServerHandler()); //处理tcp协议传输的数据
+                        log.warn("start init netty");
                         socketChannel.pipeline().addLast(new HttpServerCodec()); // http 编码
                         socketChannel.pipeline().addLast(new HttpObjectAggregator(65536)); // http 消息聚合器
                         socketChannel.pipeline().addLast(new WebSocketServerCompressionHandler()); // 压缩 可以不设置
                         socketChannel.pipeline().addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH, null, true)); // 协议
-                        socketChannel.pipeline().addLast(new WebSocketFrameHandler()); // 处理WebSocketFrame
+                        socketChannel.pipeline().addLast(webSocketFrameHandler); // 处理WebSocketFrame
                     }
                 })
                 .option(ChannelOption.SO_BACKLOG, 128)

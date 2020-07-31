@@ -36,3 +36,6 @@ mybatis-plus:
     lazy-loading-enabled: true
     aggressive-lazy-loading: false
     cache-enabled: true
+
+netty:
+  port: 12345

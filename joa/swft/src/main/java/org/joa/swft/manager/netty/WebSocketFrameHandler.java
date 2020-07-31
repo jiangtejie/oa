@@ -1,19 +1,33 @@
 package org.joa.swft.manager.netty;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
+import org.joa.swft.pojo.vo.WebSocketMessageVO;
+import org.joa.swft.service.RedisService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author jtj
  */
 @Slf4j
-public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocketFrame> {
+@Component
+@ChannelHandler.Sharable
+public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocketFrame> implements ConnectManager {
+
+    @Autowired
+    private RedisService redisService;
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, WebSocketFrame webSocketFrame) throws Exception {
@@ -40,5 +54,50 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
             String message = "unsupported frame type: " + webSocketFrame.getClass().getName();
             throw new UnsupportedOperationException(message);
         }
+    }
+
+    @Override
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+        socketClientNums.incrementAndGet();
+        socketChannelHandlerContexts.put(1, ctx.channel());
+        log.warn("客户端登陆消息服务器");
+        log.warn("当前活跃人数{}", socketClientNums);
+    }
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        socketClientNums.decrementAndGet();
+        socketChannelHandlerContexts.remove(1);
+        log.warn("客户端退出消息服务器");
+        log.warn("当前活跃人数{}", socketClientNums);
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        super.channelActive(ctx);
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        //获取用户离线消息
+        log.warn("您有" + redisService.getOffMsgSize("1") + "条未读消息!");
+        socketChannelHandlerContexts.get(1).writeAndFlush(new TextWebSocketFrame("您有" + redisService.getOffMsgSize("1") + "条未读消息!"));
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        super.channelInactive(ctx);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        log.error("连接出错");
+        socketChannelHandlerContexts.get(1).writeAndFlush(new TextWebSocketFrame("消息服务器出错"));
+        super.exceptionCaught(ctx, cause);
+    }
+
+    @Override
+    public List<WebSocketMessageVO> getOffMsgByUserId(Integer userId) {
+        return null;
     }
 }

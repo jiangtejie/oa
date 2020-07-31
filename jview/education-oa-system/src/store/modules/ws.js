@@ -34,6 +34,7 @@ const actions = {
     }
     state.socket.onmessage = function (event) {
       console.info("消息接受:", event.data);
+      //消息提示
     };
     state.socket.onopen = function (event) {
       Notification({
@@ -59,16 +60,17 @@ const actions = {
     if(window.location.href.indexOf('login')!=-1){
         return;
     }
-    console.log('重新连接到消息服务器.....');
     setTimeout(function () {
       var ws = new WebSocket(globalConfig.WEBSOCKET_URL);
       ws.onclose = function () {
+        console.log('关闭重连');
         dispatch('reconnect')
       };
       ws.onerror = function () {
+        console.log('错误重连');
         dispatch('reconnect')
       };
-    }, 2000);
+    }, 5000);
   },
 
   /**

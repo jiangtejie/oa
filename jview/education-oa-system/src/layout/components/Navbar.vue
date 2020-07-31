@@ -7,25 +7,13 @@
 
     <!-- 面包屑组件 -->
     <breadcrumb class="breadcrumb-container" />
-    <el-dialog
-      title="我的同事"
-      :visible.sync="dialogTableVisible"
-      width="40%"
-      :before-close="handleClose"
-      center
-    >
-      <span>这里是选择同事好友</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogTableVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogTableVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
+
     <!-- 顶部右侧菜单 -->
     <div class="right-menu">
       <el-dropdown class="avatar-container">
         <!-- 头像 -->
         <div class="avatar-wrapper">
-          <el-badge is-dot class="item">
+          <el-badge value="12" class="item">
             <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
           </el-badge>
           <i class="el-icon-arrow-down el-icon--right" />
@@ -33,10 +21,7 @@
         <!-- 下拉框 -->
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <el-dropdown-item class="clearfix">
-            <router-link to="/">我的工作<el-badge class="mark" :value="12" /></router-link>
-          </el-dropdown-item>
-          <el-dropdown-item class="clearfix">
-            <el-button type="text" style="color:black" @click="dialogTableVisible = true">我的同事<el-badge class="mark" :value="12" /></el-button>
+            <router-link to="/">我的工作</router-link>
           </el-dropdown-item>
           <el-dropdown-item divided>
             <span style="display:block;">个人中心</span>
@@ -65,7 +50,7 @@ export default {
   },
   data() {
     return {
-      dialogTableVisible: false
+
     }
   },
   computed: {
@@ -172,5 +157,9 @@ export default {
       }
     }
   }
+}
+
+.user-dropdown{
+  margin-top: 0px;
 }
 </style>

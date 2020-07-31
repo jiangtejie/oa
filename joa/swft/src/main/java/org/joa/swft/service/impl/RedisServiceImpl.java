@@ -1,10 +1,13 @@
 package org.joa.swft.service.impl;
 
+import org.joa.swft.pojo.vo.WebSocketMessageVO;
 import org.joa.swft.service.RedisService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,8 +29,30 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public void setDataWithTime(String remark, Integer data, long timeout) {
+    public void setData(String remark, Object data, long timeout) {
         redisTemplate.opsForValue().set(remark, data, timeout, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public void setMsgList(String remark, Object data) {
+        List<WebSocketMessageVO> webSocketMessageVOS = new ArrayList<>(8);
+        webSocketMessageVOS.add((WebSocketMessageVO)data);
+        redisTemplate.opsForList().leftPush(remark, webSocketMessageVOS);
+    }
+
+    @Override
+    public void setMsgList(String remark, Object data, long timeout) {
+
+    }
+
+    @Override
+    public Object getMsgList(String remark) {
+        return redisTemplate.opsForList().rightPop(remark);
+    }
+
+    @Override
+    public Long getOffMsgSize(String remark) {
+        return redisTemplate.opsForList().size(remark);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package org.joa.swft.service;
 
 
+import org.joa.swft.pojo.vo.WebSocketMessageVO;
+
 /**
  * @Classname RedisService
- * @Description TODO
+ * @Description 缓存任务
  * @Date 2019/10/9 0009 10:48
  * @Author by jtj
  */
@@ -22,7 +24,35 @@ public interface RedisService {
      * @param data
      * @param timeout
      */
-    void setDataWithTime(String remark, Integer data, long timeout);
+    void setData(String remark, Object data, long timeout);
+
+    /**
+     * 保存用户信息
+     * @param remark
+     * @param data
+     */
+    void setMsgList(String remark, Object data);
+
+    /**
+     * 保存离线信息
+     * @param remark
+     * @param data
+     * @param timeout
+     */
+    void setMsgList(String remark, Object data, long timeout);
+
+    /**
+     * 获取用户的离线消息
+     * @param remark
+     */
+    Object getMsgList(String remark);
+
+    /**
+     * 获取离线消息大小
+     * @param remark
+     * @return
+     */
+    Long getOffMsgSize(String remark);
 
     /**
      * 获取数据的方法
