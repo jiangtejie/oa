@@ -14,7 +14,7 @@ import lombok.*;
 public class WebSocketMessageVO {
 
     /**
-     * 消息类型
+     * 消息类型 1:系统未读消息  2:其他消息
      */
     private String type;
 

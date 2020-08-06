@@ -1,6 +1,5 @@
 package org.joa.swft.manager.netty;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -23,7 +22,7 @@ import java.util.List;
  */
 @Slf4j
 @Component
-@ChannelHandler.Sharable
+@ChannelHandler.Sharable //标示一个ChannelHandler可以被多个Channel安全地共享
 public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocketFrame> implements ConnectManager {
 
     @Autowired
@@ -78,10 +77,11 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
     }
 
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        //获取用户离线消息
-        log.warn("您有" + redisService.getOffMsgSize("1") + "条未读消息!");
-        socketChannelHandlerContexts.get(1).writeAndFlush(new TextWebSocketFrame("您有" + redisService.getOffMsgSize("1") + "条未读消息!"));
+    public void channelReadComplete(ChannelHandlerContext ctx) {
+        JSONObject unreadMsg = new JSONObject();
+        unreadMsg.put("type",1);
+        unreadMsg.put("data",redisService.getOffMsgSize("1").intValue());
+        socketChannelHandlerContexts.get(1).writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(unreadMsg)));
     }
 
     @Override

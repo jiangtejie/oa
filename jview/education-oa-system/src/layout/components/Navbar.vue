@@ -3,7 +3,11 @@
 -->
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <hamburger
+      :is-active="sidebar.opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
 
     <!-- 面包屑组件 -->
     <breadcrumb class="breadcrumb-container" />
@@ -13,8 +17,8 @@
       <el-dropdown class="avatar-container">
         <!-- 头像 -->
         <div class="avatar-wrapper">
-          <el-badge value="12" class="item">
-            <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <el-badge is-dot class="item">
+            <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
           </el-badge>
           <i class="el-icon-arrow-down el-icon--right" />
         </div>
@@ -27,7 +31,10 @@
             <span style="display:block;">个人中心</span>
           </el-dropdown-item>
           <el-dropdown-item class="clearfix">
-            <router-link to="/">系统消息<el-badge class="mark" :value="12" /></router-link>
+            <router-link to="/">
+              系统消息
+              <el-badge class="mark" :value="unreadMsgNum" />
+            </router-link>
           </el-dropdown-item>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">退出登录</span>
@@ -39,46 +46,50 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
+import { mapGetters } from "vuex";
+import Breadcrumb from "@/components/Breadcrumb";
+import Hamburger from "@/components/Hamburger";
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
   },
   data() {
     return {
-
-    }
+      unreadMsgNum: 0,
+    };
   },
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar'
-    ])
+    ...mapGetters(["sidebar", "avatar", "websocket"]),
   },
-  mounted(){
+  created() {},
+  mounted() {
     this.$store.dispatch("ws/init");
+    this.websocket.onmessage = function (event) {
+      var unreadMsg = JSON.parse(event.data);
+      if (unreadMsg.type === 1) {
+        this.unreadMsgNum = unreadMsg.data;
+      }
+    };
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
+      this.$store.dispatch("app/toggleSideBar");
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      await this.$store.dispatch("user/logout");
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     },
     handleClose(done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done()
+      this.$confirm("确认关闭？")
+        .then((_) => {
+          done();
         })
-        .catch(_ => {})
-    }
-  }
-}
+        .catch((_) => {});
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -87,18 +98,18 @@ export default {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .hamburger-container {
     line-height: 46px;
     height: 100%;
     float: left;
     cursor: pointer;
-    transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    transition: background 0.3s;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: rgba(0, 0, 0, 0.025);
     }
   }
 
@@ -125,10 +136,10 @@ export default {
 
       &.hover-effect {
         cursor: pointer;
-        transition: background .3s;
+        transition: background 0.3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          background: rgba(0, 0, 0, 0.025);
         }
       }
     }
@@ -159,7 +170,7 @@ export default {
   }
 }
 
-.user-dropdown{
+.user-dropdown {
   margin-top: 0px;
 }
 </style>

@@ -32,10 +32,11 @@ const actions = {
     if (state.socket == null) {
       commit('SET_SOCKET', globalConfig.WEBSOCKET_URL)
     }
-    state.socket.onmessage = function (event) {
-      console.info("消息接受:", event.data);
-      //消息提示
-    };
+    // 在需要的地方去监听
+    // state.socket.onmessage = function (event) {
+    //   console.info("消息接受:", event.data);
+    //   //消息提示
+    // };
     state.socket.onopen = function (event) {
       Notification({
         title: '成功',
