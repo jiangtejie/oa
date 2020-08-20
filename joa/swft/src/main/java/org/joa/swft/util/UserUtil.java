@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import org.joa.swft.manager.sercurity.AuthUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * @author JiangTeJie
  * @title: UserUtil
@@ -24,5 +27,13 @@ public class UserUtil {
             return (AuthUser)object;
         }
         return null;
+    }
+
+    /**
+     * 获取当前用户ID
+     * @return
+     */
+    public static Integer getCurrentUserId(){
+        return getCurrentUser().getUser().getId();
     }
 }

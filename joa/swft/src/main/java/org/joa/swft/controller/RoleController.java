@@ -29,32 +29,33 @@ import javax.validation.constraints.Min;
 
 @RestController
 @Validated
-@Api(value = "系统管理相关请求")
+@RequestMapping("role")
+@Api(value = "角色相关")
 public class RoleController extends BaseController {
 
     @Autowired
     private RoleService roleService;
 
     @ApiOperation(value = "增加角色")
-    @PostMapping("role")
+    @PostMapping("")
     public ResultVO addRole(@RequestBody @Validated({Add.class}) Role role) {
         return ResultUtil.result(roleService.save(role));
     }
 
     @ApiOperation(value = "删除角色")
-    @DeleteMapping("role/{id}")
+    @DeleteMapping("{id}")
     public ResultVO deleteRoleById(@PathVariable("id") @Min(value = 0) Integer id) {
         return ResultUtil.result(roleService.deleteRoleById(id));
     }
 
     @ApiOperation(value = "更新角色")
-    @PutMapping("role")
+    @PutMapping("")
     public ResultVO updateRole(@RequestBody @Validated({Update.class}) Role role) {
         return ResultUtil.result(roleService.updateById(role));
     }
 
     @ApiOperation(value = "查询角色")
-    @GetMapping("role")
+    @GetMapping("")
     public ResultVO getRole() {
         return ResultVO.success(roleService.list());
     }

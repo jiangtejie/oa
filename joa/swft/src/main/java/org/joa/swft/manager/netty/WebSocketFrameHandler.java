@@ -10,19 +10,20 @@ import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
+import org.joa.swft.pojo.enums.WebSocketMessageType;
 import org.joa.swft.pojo.vo.WebSocketMessageVO;
 import org.joa.swft.service.RedisService;
+import org.joa.swft.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 /**
  * @author jtj
+ * Sharable 表示一个ChannelHandler可以被多个Channel安全地共享
  */
 @Slf4j
 @Component
-@ChannelHandler.Sharable //标示一个ChannelHandler可以被多个Channel安全地共享
+@ChannelHandler.Sharable
 public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocketFrame> implements ConnectManager {
 
     @Autowired
@@ -33,20 +34,15 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
         if (webSocketFrame instanceof TextWebSocketFrame) {
             String request = ((TextWebSocketFrame) webSocketFrame).text();
             System.out.println("接收消息:" + request);
-
             String msg = "接收成功";
-            //返回信息
             channelHandlerContext.channel().writeAndFlush(new TextWebSocketFrame(msg));
         } else if (webSocketFrame instanceof BinaryWebSocketFrame) {
-            //二进制
             ByteBuf content = webSocketFrame.content();
             byte[] reg = new byte[content.readableBytes()];
             content.readBytes(reg);
             String request = new String(reg, "UTF-8");
             System.out.println("接收消息:" + request);
-
             String msg = "接收成功";
-            //返回信息
             ByteBuf respByteBuf = Unpooled.copiedBuffer(msg.getBytes());
             channelHandlerContext.channel().writeAndFlush(new BinaryWebSocketFrame(respByteBuf));
         } else {
@@ -77,11 +73,14 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
     }
 
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
-        JSONObject unreadMsg = new JSONObject();
-        unreadMsg.put("type",1);
-        unreadMsg.put("data",redisService.getOffMsgSize("1").intValue());
-        socketChannelHandlerContexts.get(1).writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(unreadMsg)));
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        Long unReadSize = redisService.getOffMsgSize("1");
+        if (unReadSize > 1) {
+            JSONObject unread = new JSONObject();
+            unread.put("type",3);
+            unread.put("num",unReadSize);
+            socketChannelHandlerContexts.get(1).writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(unread)));
+        }
     }
 
     @Override
@@ -94,10 +93,5 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
         log.error("连接出错");
         socketChannelHandlerContexts.get(1).writeAndFlush(new TextWebSocketFrame("消息服务器出错"));
         super.exceptionCaught(ctx, cause);
-    }
-
-    @Override
-    public List<WebSocketMessageVO> getOffMsgByUserId(Integer userId) {
-        return null;
     }
 }

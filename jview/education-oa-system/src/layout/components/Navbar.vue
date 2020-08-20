@@ -27,14 +27,14 @@
           <el-dropdown-item class="clearfix">
             <router-link to="/">我的工作</router-link>
           </el-dropdown-item>
-          <el-dropdown-item divided>
+          <el-dropdown-item>
             <span style="display:block;">个人中心</span>
           </el-dropdown-item>
           <el-dropdown-item class="clearfix">
             <router-link to="/">
               系统消息
-              <el-badge class="mark" :value="unreadMsgNum" />
             </router-link>
+            {{unreadMsgNum==0? '' : unreadMsgNum}}
           </el-dropdown-item>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">退出登录</span>
@@ -68,8 +68,8 @@ export default {
     this.$store.dispatch("ws/init");
     this.websocket.onmessage = function (event) {
       var unreadMsg = JSON.parse(event.data);
-      if (unreadMsg.type === 1) {
-        this.unreadMsgNum = unreadMsg.data;
+      if (unreadMsg!=null &&　unreadMsg.type === 3) {
+        this.unreadMsgNum = unreadMsg.num;
       }
     };
   },

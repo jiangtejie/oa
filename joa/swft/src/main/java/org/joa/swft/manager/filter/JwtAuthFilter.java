@@ -7,6 +7,7 @@ import org.joa.swft.config.GuavaCacheConfig;
 import org.joa.swft.manager.sercurity.AuthUser;
 import org.joa.swft.service.CustomUserDetailService;
 import org.joa.swft.service.impl.TokenAuthorizationService;
+import org.joa.swft.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,7 +1,8 @@
 package org.joa.swft.pojo.vo;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.*;
+
+import java.io.Serializable;
 
 /**
  * @author jtj
@@ -11,15 +12,23 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class WebSocketMessageVO {
+public class WebSocketMessageVO implements Serializable {
 
-    /**
-     * 消息类型 1:系统未读消息  2:其他消息
-     */
-    private String type;
+    /**消息类型 1:系统未读消息  2:用户消息*/
+    private Integer type;
 
-    /**
-     * 消息数据
-     */
-    private JSONObject data;
+    /**发送方用户ID*/
+    private Integer sendUserId;
+
+    /**发送方用户IP地址*/
+    private String sendIp;
+
+    /**接受方用户ID*/
+    private Integer acceptUserId;
+
+    /**消息数据*/
+    private Object data;
+
+    /**发送时间*/
+    private String createTime;
 }

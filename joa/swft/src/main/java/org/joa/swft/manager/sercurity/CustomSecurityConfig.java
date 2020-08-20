@@ -54,7 +54,7 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomUserDetailService customUserDetailService;
 
     @Bean
-    public JwtAuthFilter myAuthFilter() throws Exception {
+    public JwtAuthFilter myAuthFilter() {
         return new JwtAuthFilter();
     }
 
@@ -85,8 +85,9 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-resources/configuration/ui",
                         "/swagger-resources",
                         "/swagger-resources/configuration/security",
-                        "/swagger-ui.html",
+                        "/doc.html",
                         "/webjars/**",
+                        "/test",
                         "/user/login", "/user/logout", "/re-login").permitAll()
                 .anyRequest()
                 .fullyAuthenticated()
@@ -100,7 +101,7 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                         log.debug("登陆成功({})", authentication.getPrincipal());
                     }
                     Log log = new Log();
-                    log.setOptionUser(UserUtil.getCurrentUser().getUser().getId());
+                    log.setOptionUser(UserUtil.getCurrentUserId());
                     log.setOptionUsername(UserUtil.getCurrentUser().getUser().getRealName());
                     log.setOptionTarget("用户登录");
                     log.setOptionType(BusinessType.LOGIN.getType());

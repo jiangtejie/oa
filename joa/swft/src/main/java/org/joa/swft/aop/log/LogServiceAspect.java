@@ -61,7 +61,7 @@ public class LogServiceAspect {
         Map<String,String> params = ServletUtil.converMap(ServletUtil.getHttpServletRequest().getParameterMap());
 
         Log log = new Log();
-        log.setOptionUser(UserUtil.getCurrentUser().getUser().getId());
+        log.setOptionUser(UserUtil.getCurrentUserId());
         log.setOptionUsername(UserUtil.getCurrentUser().getUser().getRealName());
         log.setOptionTarget(logDto.getOptionModule());
         log.setOptionType(logDto.getOptionType());

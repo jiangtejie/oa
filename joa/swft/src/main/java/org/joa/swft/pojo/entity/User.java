@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 import org.joa.swft.pojo.entity.validate.Add;
@@ -22,6 +23,7 @@ import javax.validation.constraints.NotNull;
  * @since 2020/3/13 21:36
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "user")

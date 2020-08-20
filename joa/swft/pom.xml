@@ -8,16 +8,16 @@
         <version>2.2.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>org.joa</groupId>
     <artifactId>swft</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>swft</name>
-
-    <description>study for vue and SpringBoot</description>
 
     <properties>
+        <minio.version>7.1.0</minio.version>
+        <drools.version>7.6.0.Final</drools.version>
         <neyty.version>4.1.51.Final</neyty.version>
-        <swagger2.version>2.7.0</swagger2.version>
+        <swagger2.version>2.9.2</swagger2.version>
         <hutool.version>5.1.0</hutool.version>
         <jose4j.version>0.7.0</jose4j.version>
         <mybatis-plus.version>3.3.1.tmp</mybatis-plus.version>
@@ -30,6 +30,44 @@
     </properties>
 
     <dependencies>
+        <!--分布式文件系统-->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
+        </dependency>
+
+        <!--drools规则引擎-->
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-core</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-compiler</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-templates</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-api</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-spring</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
@@ -38,13 +76,13 @@
 
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
+            <artifactId>springfox-swagger2</artifactId>
             <version>${swagger2.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger2.version}</version>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.2</version>
         </dependency>
 
         <dependency>
