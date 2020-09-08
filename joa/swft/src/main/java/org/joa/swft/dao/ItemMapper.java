@@ -1,10 +1,10 @@
 package org.joa.swft.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.joa.swft.pojo.entity.OffWork;
+import org.joa.swft.pojo.entity.Item;
 import org.springframework.stereotype.Repository;
 
-@Repository("offWorkMapper")
-public interface OffWorkMapper extends BaseMapper<OffWork> {
+@Repository("itemMapper")
+public interface ItemMapper extends BaseMapper<Item> {
 
 }

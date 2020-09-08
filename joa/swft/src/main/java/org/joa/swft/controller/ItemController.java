@@ -1,7 +1,7 @@
 package org.joa.swft.controller;
 
 import org.joa.swft.pojo.vo.ResultVO;
-import org.joa.swft.service.OffWorkService;
+import org.joa.swft.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @Author: JTJ
  * @Date: 2020/08/26 上午 11:45
- * @Description: 请假请求
+ * @Description: 事项请求
  */
 @RestController
-@RequestMapping("offWork")
-public class OffWorkController {
+@RequestMapping("item")
+public class ItemController {
 
     @Autowired
-    private OffWorkService offWorkService;
+    private ItemService itemService;
 
     @GetMapping
-    public ResultVO list(){
-        return ResultVO.success(offWorkService.list());
+    public ResultVO list(Integer userId){
+        return ResultVO.success(itemService.selectByUserId(userId));
     }
 }

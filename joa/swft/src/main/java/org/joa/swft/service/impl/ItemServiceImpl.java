@@ -1,11 +1,14 @@
 package org.joa.swft.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.joa.swft.dao.OffWorkMapper;
-import org.joa.swft.pojo.entity.OffWork;
-import org.joa.swft.service.OffWorkService;
+import org.joa.swft.dao.ItemMapper;
+import org.joa.swft.pojo.entity.Item;
+import org.joa.swft.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Author: JTJ
@@ -13,9 +16,15 @@ import org.springframework.stereotype.Service;
  * @Description: 请假服务
  */
 @Service
-public class OffWorkServiceImpl extends ServiceImpl<OffWorkMapper, OffWork> implements OffWorkService {
+public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements ItemService {
 
     @Autowired
-    private OffWorkMapper offWorkMapper;
+    private ItemMapper itemMapper;
 
+    @Override
+    public List<Item> selectByUserId(Integer userId) {
+        QueryWrapper<Item> wrapper = new QueryWrapper();
+        wrapper.eq("user_id",userId);
+        return itemMapper.selectList(wrapper);
+    }
 }

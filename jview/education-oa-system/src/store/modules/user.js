@@ -5,7 +5,8 @@ import { resetRouter } from '@/router'
 const state = {
   token: getToken(),
   name: '',
-  avatar: ''
+  avatar: '',
+  userId:''
 }
 
 // 同步操作的事件，直接操作state里面的数据
@@ -21,6 +22,10 @@ const mutations = {
   // 设置头像
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  // 当前登录人ID
+  SET_USER_ID: (state, userId) => {
+    state.userId = userId
   }
 }
 
@@ -52,10 +57,11 @@ const actions = {
         }
 
         // 对象参数的解构
-        const { name, avatar } = data
+        const { name, avatar, userId } = data
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
+        commit('SET_USER_ID', userId)
         resolve(data)
       }).catch(error => {
         reject(error)

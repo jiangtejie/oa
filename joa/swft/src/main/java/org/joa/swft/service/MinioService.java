@@ -1,7 +1,6 @@
 package org.joa.swft.service;
 
 import com.alibaba.fastjson.JSONObject;
-import io.minio.ObjectWriteResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

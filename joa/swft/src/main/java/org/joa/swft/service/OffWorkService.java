@@ -1,4 +1,16 @@
 package org.joa.swft.service;
 
-public interface OffWorkService {
+import com.baomidou.mybatisplus.extension.service.IService;
+import org.joa.swft.pojo.entity.OffWork;
+
+import java.util.List;
+
+/**
+ * @Author: JTJ
+ * @Date: 2020/08/26 上午 11:30
+ * @Description:  请假服务
+ */
+public interface OffWorkService extends IService<OffWork> {
+
+    List<OffWork> selectByUserId(Integer userId);
 }

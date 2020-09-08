@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserInfoVO {
 
+    private Integer userId;
+
     private String name;
 
     private String avatar;

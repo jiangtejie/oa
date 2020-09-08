@@ -10,10 +10,7 @@ import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
-import org.joa.swft.pojo.enums.WebSocketMessageType;
-import org.joa.swft.pojo.vo.WebSocketMessageVO;
 import org.joa.swft.service.RedisService;
-import org.joa.swft.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -25,6 +25,9 @@ public class Notice extends BaseEntity {
     @TableField(value = "title")
     private String title;
 
+    @TableField(value = "content")
+    private String content;
+
     /**发布人*/
     @TableField(value = "producer")
     private Integer producer;

@@ -30,7 +30,7 @@ public class LoginController extends BaseController{
     @OptionLog(optionModule = "用户模块",optionType = BusinessType.SELECT, optionDesc = "获取用户信息")
     public ResultVO<UserInfoVO> getUserInfo(){
         User user = UserUtil.getCurrentUser().getUser();
-        UserInfoVO userInfoVO = new UserInfoVO(user.getRealName(),user.getAvatar());
+        UserInfoVO userInfoVO = new UserInfoVO(user.getId(), user.getRealName(),user.getAvatar());
         return ResultVO.success(userInfoVO);
     }
 }

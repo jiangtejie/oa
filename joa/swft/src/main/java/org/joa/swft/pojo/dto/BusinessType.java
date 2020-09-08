@@ -13,8 +13,7 @@ public enum BusinessType {
     INSERT("添加"),
     DELETE("删除"),
     UPDATE("更新"),
-    SELECT("查询")
-    ;
+    SELECT("查询");
 
     private String type;
 

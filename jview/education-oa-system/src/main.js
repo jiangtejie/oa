@@ -26,6 +26,8 @@ import VueParticles from 'vue-particles'
 // 走马字
 import scroll from 'vue-seamless-scroll'
 
+import 'driver.js/dist/driver.min.css'
+
 Vue.use(scroll)
 Vue.use(VueParticles)
 VueAMap.initAMapApiLoader({
