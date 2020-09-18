@@ -92,7 +92,11 @@
             <span>
               <b>请假</b>
             </span>
-            <el-button style="float: right; padding: 3px 0; margin-left:0.5vw" type="text">新建</el-button>
+            <el-button
+              @click="holidayRequest()"
+              style="float: right; padding: 3px 0; margin-left:0.5vw"
+              type="text"
+            >新建</el-button>
           </div>
           <div v-for="(item,idx) in offWorkList" :key="idx" class="text item">
             <div>
@@ -106,6 +110,30 @@
             </div>
           </div>
         </el-card>
+
+        <el-dialog title="请假申请" :visible.sync="holidayFormVisible" center>
+          <el-form :model="holidayForm" label-position="left">
+            <el-form-item label="请假类型">
+              <el-select v-model="holidayForm.type" placeholder="请选择请假类型">
+                <el-option label="事假" value="1"></el-option>
+                <el-option label="年假" value="2"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="时间范围" label-position="left">
+              <el-date-picker
+                v-model="holidayTime"
+                type="datetimerange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="holidayFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="holidayFormVisible = false">提 交</el-button>
+          </div>
+        </el-dialog>
       </div>
 
       <!-- 通知信息 -->
@@ -212,6 +240,16 @@ export default {
       activeName: "first",
       clockDialog: false,
       roomDialog: false,
+      holidayFormVisible: false,
+      holidayTime: [
+        new Date(2000, 10, 10, 10, 10),
+        new Date(2000, 10, 11, 10, 10),
+      ],
+      holidayForm: {
+        type: "",
+        startTime: "",
+        endTime: "",
+      },
       labelPosition: "top",
       clockForm: {
         name: "",
@@ -304,6 +342,9 @@ export default {
     // 关闭打卡页面
     handleClockClose() {
       this.clockDialog = false;
+    },
+    holidayRequest() {
+      this.holidayFormVisible = true;
     },
     // 关闭视频房间
     handleRoomClose() {
