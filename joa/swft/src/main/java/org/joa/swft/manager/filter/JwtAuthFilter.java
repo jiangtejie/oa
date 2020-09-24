@@ -35,7 +35,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private CustomUserDetailService customUserDetailService;
 
-    private final String tokenHeader="Authorization";
+    private final String tokenHeader = "Authorization";
+
+    private final String loginUrl = "login";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -60,7 +62,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 log.error("登录过期");
             }
             // 如果jwt正确解出账号信息，说明是合法用户，设置认证信息，认证通过
-            if (null != username  && null == SecurityContextHolder.getContext().getAuthentication()) {
+            if (null != username && null == SecurityContextHolder.getContext().getAuthentication()) {
 
                 //每次请求 都重新加载一遍权限
                 UserDetails userDetails = customUserDetailService.loadUserByUsername(username);
@@ -70,11 +72,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 // 把请求的信息设置到UsernamePasswordAuthenticationToken details对象里面，包括发请求的ip等
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                if(log.isDebugEnabled()){
-                    log.debug("设置用户认证信息({})",auth);
+                if (log.isDebugEnabled()) {
+                    log.debug("设置用户认证信息({})", auth);
                 }
                 // 全局设置用户登录状态的信息，方便以后全局取出
                 SecurityContextHolder.getContext().setAuthentication(auth);
+            }
+        } else {
+            if (request.getRequestURI().indexOf(loginUrl) == -1) {
+                log.error("请求 URI({}),没有携带token", request.getRequestURI());
             }
         }
 
