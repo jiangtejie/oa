@@ -5,8 +5,8 @@ spring:
   datasource:
     username: root
     password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://180.76.156.18:3306/swft?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://180.76.156.18:3306/swft?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&serverTimezone=UTC
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       initial-size: 5
@@ -33,7 +33,8 @@ spring:
 mybatis-plus:
   mapper-locations: classpath:mapper/*Mapper.xml
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #用p6spy代替日志监控
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
     lazy-loading-enabled: true
     aggressive-lazy-loading: false
