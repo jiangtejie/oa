@@ -88,7 +88,8 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/doc.html",
                         "/webjars/**",
                         "/test",
-                        "/user/login", "/user/logout", "/re-login").permitAll()
+                        "/user/login", "/user/logout", "/re-login",
+                        "/druid/**/**").permitAll()
                 .anyRequest()
                 .fullyAuthenticated()
                 .and()
