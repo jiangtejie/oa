@@ -17,7 +17,7 @@
         <p6spy.version>3.8.7</p6spy.version>
         <flowable.version>6.5.0</flowable.version>
         <minio.version>7.1.0</minio.version>
-        <drools.version>7.6.0.Final</drools.version>
+        <drools.version>7.60.0.Final</drools.version>
         <neyty.version>4.1.51.Final</neyty.version>
         <swagger2.version>2.9.2</swagger2.version>
         <hutool.version>5.1.0</hutool.version>
